@@ -5,12 +5,19 @@ class SessionsController < ApplicationController
   end
 
   post '/login' do
-    #find the correct user
-    #set session to user id
-    #redirect to '/users/workouts'
-
-    #if incorrect, redirect to '/sessions/login' with flash message
-    flash[:message] = "Please enter correct login information"
+    if params[:username] != "" && params[:password] != ""
+      @user = find_by(:username => params[:username])
+        if @user && @user.authenticate(params[:password])
+          session[:user_id] = @user.id
+          redirect to '/workouts'
+        else
+          flash[:message] = "Login information incorrect, please try again"
+          redirect to '/login'
+        end
+    else
+      flash[:message] = "Please enter a username and password"
+      redirect to '/login'
+    end
   end
 
   get '/logout' do

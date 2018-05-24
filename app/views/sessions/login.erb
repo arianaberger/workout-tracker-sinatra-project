@@ -1,5 +1,12 @@
 <h3>Login</h3>
 
+<!-- set CSS for flash messages! -->
+<p>
+<% if flash.has?(:message) %>
+  <%= flash[:message] %>
+<% end %>
+</p>
+
 <form action="/sessions" method="POST">
   <input type="text" name="username">
   <input type="password" name="password">
