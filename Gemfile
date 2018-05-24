@@ -17,4 +17,4 @@ gem 'bcrypt'
 #   gem 'selenium'
 #   gem 'rack-test'
 #   gem 'database_cleaner', git: 'https://github.com/bmabey/database_cleaner.git'
-end
+# end
