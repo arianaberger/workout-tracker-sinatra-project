@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
     erb :'/sessions/login'
   end
 
-  post 'sessions' do
+  post '/sessions' do
     #find the correct user
     #set session to user id
     #redirect to '/users/workouts'
