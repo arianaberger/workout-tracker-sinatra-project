@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   has_many :workouts
-  has_secure_password
+  has_secure_password #this links bcrypt with ActiveRecord
 
   def slug
     username.downcase.gsub(" ","-")
