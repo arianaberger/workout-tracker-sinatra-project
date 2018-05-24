@@ -1,5 +1,12 @@
 <h2>Signup!</h2>
 
+<!-- set CSS for flash messages! -->
+<p>
+<% if flash.has?(:message) %>
+  <%= flash[:message] %>
+<% end %>
+</p>
+
 <p>Please enter a username and password:</p>
 
 <form action="/signup" method="POST">
