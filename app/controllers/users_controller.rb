@@ -1,15 +1,19 @@
 class UsersController < ApplicationController
 
   get '/signup' do
-    erb :'/user/create_user'
+    #redirect if already signed in?
+    erb :'/users/create_user'
   end
 
   post '/signup' do
-    #get params and create a user
     #first check if username is taken!
-    #then redirect to /workouts
-
-    #else redirect to /signup with flash message of "username taken"
+    if params[:username] != "" && params[:password] != ""
+      @user = User.create(params)
+      session[user_id] = @user.id
+      redirect to '/workouts'
+    else
+      flash[:message] = "Username taken!"
+      redirect to '/signup'
   end
 
   get '/workouts' do
