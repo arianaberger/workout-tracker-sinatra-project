@@ -10,4 +10,5 @@ use Rack::MethodOverride
 use MovementsController
 use UsersController
 use SessionsController
+use WorkoutsController
 run ApplicationController

@@ -1,7 +1,7 @@
 class WorkoutsController < ApplicationController
 
   get '/workouts' do
-
+    erb :'/workouts/workouts'
   end
 
   get '/workouts/new' do
