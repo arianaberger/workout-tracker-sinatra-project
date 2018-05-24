@@ -1,4 +1,7 @@
+require 'rack-flash'
+
 class UsersController < ApplicationController
+  use Rack::Flash
 
   get '/signup' do
     #redirect if already signed in?
@@ -6,8 +9,9 @@ class UsersController < ApplicationController
   end
 
   post '/signup' do
-    @check_username = User.find_by(:username => params[:username])
-    if @check_username = User.find_by(:username => params[:username])
+    @check_username = User.find_by(:username => params[:user][:username])
+    if @check_username
+      #flash message is not showing up!
       flash[:message] = "Username taken!"
       redirect to '/signup'
     end
@@ -17,6 +21,7 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect to '/workouts'
     else
+      #flash message is not showing up!
       flash[:message] = "Please fill out both fields"
       redirect to '/signup'
     end
