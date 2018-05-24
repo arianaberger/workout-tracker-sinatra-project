@@ -1,10 +1,10 @@
 class SessionsController < ApplicationController
 
-  get 'sessions/login' do
+  get '/login' do
     erb :'/sessions/login'
   end
 
-  post '/sessions' do
+  post '/login' do
     #find the correct user
     #set session to user id
     #redirect to '/users/workouts'
@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
     flash[:message] = "Please enter correct login information"
   end
 
-  get 'sessions/logout' do
+  get '/logout' do
     #this is accessed via a link
     #session.clear
     #redirect to '/'
