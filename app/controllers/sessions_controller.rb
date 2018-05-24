@@ -15,8 +15,13 @@ class SessionsController < ApplicationController
 
   get '/logout' do
     #this is accessed via a link
-    #session.clear
-    #redirect to '/'
+    if logged_in?
+      session.destroy
+      redirect to '/login'
+    else
+      redirect to '/'
+    end
   end
+
 
 end
