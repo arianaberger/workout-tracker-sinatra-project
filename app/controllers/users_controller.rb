@@ -8,12 +8,13 @@ class UsersController < ApplicationController
   post '/signup' do
     #first check if username is taken!
     if params[:username] != "" && params[:password] != ""
-      @user = User.create(params)
-      session[user_id] = @user.id
+      @user = User.create(params[:user])
+      session[:user_id] = @user.id
       redirect to '/workouts'
     else
       flash[:message] = "Username taken!"
       redirect to '/signup'
+    end
   end
 
   get '/workouts' do
