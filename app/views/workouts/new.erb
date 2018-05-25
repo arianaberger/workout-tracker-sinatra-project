@@ -1,1 +1,26 @@
 Create a new workout
+
+<p>
+<form action="/workouts/new" method="POST">
+  <!-- add different method for date input later? -->
+  Type:
+  <select name="workout[type]">
+    <option value="emom">EMOM</option>
+    <option value="amrap">AMRAP</option>
+    <option value="timed">Timed</option>
+    <option value="for_time">For Time</option>
+  </select>
+
+</br>If timed, enter final time: <input type="text" name="workout[time]">
+
+  <p>Movement:</p>
+
+  <p>Weight: <input type="text" name="workout[weight]"></p>
+
+  <p>Reps: <input type="text" name="workout[reps]"></p>
+
+  + add a movement
+</form>
+
+
+<p><a href="/movements/new">Create a new movement</a></p>
