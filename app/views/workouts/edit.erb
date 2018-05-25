@@ -21,16 +21,15 @@ Enter time: <input type="text" name="workout[time]" value="<%= @workout.time %>"
 
     <select name="movement[name]">
     <% Movement.all.each do |m| %>
-    <!-- how to have correct movement selected? -->
-    <!-- <% binding.pry %> -->
+    <!-- how to have correct movement selected? needs to find it first -->
     <option value="<%=m.name%>"><%=m.name%></option>
     <% end %>
   </select>
 
 
-  Weight: <input type="text" name="weight">
+  Weight: <input type="text" name="weight" value="<%= @w_m.weight %>">
 
-  Reps: <input type="text" name="reps">
+  Reps: <input type="text" name="reps" value="<%= @w_m.reps %>">
 
   <!-- how to do this so it dynamically adds another field above? -->
   <p>+ add a movement</p>
