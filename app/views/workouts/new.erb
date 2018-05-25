@@ -20,7 +20,7 @@ Enter time: <input type="text" name="workout[time]">
     <i>Missing a movement? Make sure to first manage your movements <a href="/movements">here</a>.</i>
   </p>
 
-    <select name="workout[movement_ids][]">
+    <select name="movement[name]">
     <% Movement.all.each do |m| %>
     <option value="<%=m.name%>"><%=m.name%></option>
     <% end %>
@@ -36,3 +36,10 @@ Enter time: <input type="text" name="workout[time]">
 
   <p><input type="submit" value="Add Workout"></p>
 </form>
+
+User
+
+Workout (belongs to user) -> :name, :time, need id of workout to save to w_m table
+Movement (belongs to workout) -> :name, need the id of this movement to add to w_m table
+:weight, :reps -> workout_movements
++ need instance of w_m created!

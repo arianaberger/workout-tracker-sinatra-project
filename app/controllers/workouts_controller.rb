@@ -11,6 +11,10 @@ class WorkoutsController < ApplicationController
   post '/workouts/new' do
     binding.pry
     @workout = Workout.create(params[:workout])
+    #iterate through each workout_movement and add weight and reps and movement, but same workout id
+    @workout_movement = Workout_Movement.create(:movement_id => :weight => params[:workout_movements][:weight], :reps => params[:workout_movements][:reps])
+    @workout_movement.update(:workout_id => @workout.id)
+    @workout_movement.save
     redirect to '/workouts'
   end
 
