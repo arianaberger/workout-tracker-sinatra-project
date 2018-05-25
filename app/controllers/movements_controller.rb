@@ -9,6 +9,7 @@ class MovementsController < ApplicationController
   end
 
   post '/movements/new' do
-    
+    @movement = Movement.create(params[:movement])
+    redirect to '/movements'
   end
 end
