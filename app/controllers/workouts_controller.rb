@@ -5,7 +5,7 @@ class WorkoutsController < ApplicationController
   end
 
   get '/workouts/new' do
-
+    erb :'/workouts/new'
   end
 
   post '/workouts/new' do

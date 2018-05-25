@@ -1,1 +1,17 @@
-Your workouts!
+<h2>Your Workouts</h2>
+
+<a href="/workouts/new">Add a workout</a>
+</br>
+
+<% if Workout.all.empty? %>
+You have no workouts yet!
+<% else %>
+
+<!-- display workouts -->
+
+  <% Workout.all.each do |w| %>
+
+    <h4><%= w.type %><</h4>
+    etc.
+  <% end %>
+<% end %>
