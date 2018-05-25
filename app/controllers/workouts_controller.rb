@@ -9,7 +9,7 @@ class WorkoutsController < ApplicationController
   end
 
   post '/workouts/new' do
-
+    
   end
 
   get '/workouts/:id' do
