@@ -5,14 +5,14 @@
 <form action="/workouts/new" method="POST">
   <!-- add different method for date input later? -->
   Type:
-  <select name="workout[name]">
+  <select name="user[workout][name]">
     <option value="emom">EMOM</option>
     <option value="amrap">AMRAP</option>
     <option value="time_cap">Time Cap</option>
     <option value="for_time">For Time</option>
   </select>
 
-Enter time: <input type="text" name="workout[time]">
+Enter time: <input type="text" name="user[workout][time]">
 </p>
 
 <!-- how to properly add movement info using join table? -->
@@ -20,14 +20,14 @@ Enter time: <input type="text" name="workout[time]">
     <i>Missing a movement? Make sure to first manage your movements <a href="/movements">here</a>.</i>
   </p>
 
-    <select name="workout_movement[movement_id]">
+    <select name="workout[movement_ids][]">
     <% Movement.all.each do |m| %>
     <option value="<%=m.name%>"><%=m.name%></option>
     <% end %>
   </select>
 
 
-  Weight: <input type="text" name="workout_movement[weight]">
+  Weight: <input type="text" name="workout[weight]">
 
   Reps: <input type="text" name="workout_movement[reps]">
 
