@@ -10,11 +10,16 @@ class WorkoutsController < ApplicationController
 
   post '/workouts/new' do
     binding.pry
+    #creating a new workout, adds it to the user and saves user
     @workout = Workout.create(params[:workout])
-    #iterate through each workout_movement and add weight and reps and movement, but same workout id
-    @workout_movement = Workout_Movement.create(:movement_id => :weight => params[:workout_movements][:weight], :reps => params[:workout_movements][:reps])
-    @workout_movement.update(:workout_id => @workout.id)
-    @workout_movement.save
+    current_user.workouts << @workout
+
+    #create variable to represent movement found by the name in params
+    #add row to workout_movements table with all necessary info
+    #need to iterate through each workout added in the form
+    @movement = Movement.find_by(:name => params[:movement][:name])
+    @w_m = Workout_Movement.create(:workout_id => @workout.id, :movement_id => @movement.id, :weight => params[:weight], :reps => params[:reps])
+
     redirect to '/workouts'
   end
 
