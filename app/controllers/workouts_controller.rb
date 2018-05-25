@@ -9,6 +9,7 @@ class WorkoutsController < ApplicationController
   end
 
   post '/workouts/new' do
+    binding.pry
     @workout = Workout.create(params[:workout])
     redirect to '/workouts'
   end

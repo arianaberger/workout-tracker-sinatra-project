@@ -5,14 +5,14 @@
 <form action="/workouts/new" method="POST">
   <!-- add different method for date input later? -->
   Type:
-  <select name="user[workout][name]">
+  <select name="workout[name]">
     <option value="emom">EMOM</option>
     <option value="amrap">AMRAP</option>
     <option value="time_cap">Time Cap</option>
     <option value="for_time">For Time</option>
   </select>
 
-Enter time: <input type="text" name="user[workout][time]">
+Enter time: <input type="text" name="workout[time]">
 </p>
 
 <!-- how to properly add movement info using join table? -->
@@ -27,9 +27,9 @@ Enter time: <input type="text" name="user[workout][time]">
   </select>
 
 
-  Weight: <input type="text" name="workout[weight]">
+  Weight: <input type="text" name="workout_movements[weight]">
 
-  Reps: <input type="text" name="workout_movement[reps]">
+  Reps: <input type="text" name="workout_movements[reps]">
 
   <!-- how to do this so it dynamically adds another field above? -->
   <p>+ add a movement</p>
