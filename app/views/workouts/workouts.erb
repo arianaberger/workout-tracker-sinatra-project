@@ -12,6 +12,6 @@ You have no workouts yet!
 
   <% Workout.all.each do |w| %>
 
-    <h4>| <a href="/workouts/<%= w.id %>"><%= w.name %></a></h4>
+    <h4><a href="/workouts/<%= w.id %>">| <%= w.name %></a></h4>
   <% end %>
 <% end %>

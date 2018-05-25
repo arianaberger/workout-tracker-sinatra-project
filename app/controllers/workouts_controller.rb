@@ -29,14 +29,15 @@ class WorkoutsController < ApplicationController
   end
 
   get '/workouts/:id/edit' do
-
+    erb :'/workouts/edit'
   end
 
   patch '/workouts/:id' do
 
   end
 
-  delete '/workouts/:id/delete' do
+  delete '/workouts/:id' do
+    #workouts with id 1 & 2 are not deleting!
     if logged_in?
     @workout = Workout.find_by_id(params[:id])
       if @workout && @workout.user == current_user
