@@ -30,6 +30,8 @@ class WorkoutsController < ApplicationController
 
   get '/workouts/:id/edit' do
     @workout = Workout.find_by_id(params[:id])
+    binding.pry
+    @movements = Movement.all
     erb :'/workouts/edit'
   end
 

@@ -21,7 +21,9 @@ Enter time: <input type="text" name="workout[time]" value="<%= @workout.time %>"
 
     <select name="movement[name]">
     <% Movement.all.each do |m| %>
-    <option value="<%=m.name%>" <%= 'selected' if @workout.movement.name == "m.name" %>><%=m.name%></option>
+    <!-- how to have correct movement selected? -->
+    <!-- <% binding.pry %> -->
+    <option value="<%=m.name%>"><%=m.name%></option>
     <% end %>
   </select>
 
