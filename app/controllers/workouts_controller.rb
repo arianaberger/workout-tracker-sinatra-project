@@ -37,7 +37,7 @@ class WorkoutsController < ApplicationController
   end
 
   delete '/workouts/:id' do
-    #workouts with id 1 & 2 are not deleting!
+    #workouts with id 1 & 2 are not deleting! otherwise it seems to work fine
     if logged_in?
     @workout = Workout.find_by_id(params[:id])
       if @workout && @workout.user == current_user
