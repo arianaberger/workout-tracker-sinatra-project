@@ -1,1 +1,37 @@
-Edit
+<h3>Edit workout</h3>
+
+<p>
+<form action="/workouts/new" method="POST">
+  <input id="hidden" type="hidden" name="_method" value="PATCH">
+
+  Type:
+  <select name="workout[name]">
+    <option value="emom" <%= 'selected' if @workout.name == "emom" %>>EMOM</option>
+    <option value="amrap" <%= 'selected' if @workout.name == "amrap" %>>AMRAP</option>
+    <option value="time_cap" <%= 'selected' if @workout.name == "time_cap" %>>Time Cap</option>
+    <option value="for_time" <%= 'selected' if @workout.name == "for_time" %>>For Time</option>
+  </select>
+
+Enter time: <input type="text" name="workout[time]" value="<%= @workout.time %>">
+</p>
+
+  <p>Movement(s):</br>
+    <i>Missing a movement? Make sure to first manage your movements <a href="/movements">here</a>.</i>
+  </p>
+
+    <select name="movement[name]">
+    <% Movement.all.each do |m| %>
+    <option value="<%=m.name%>" <%= 'selected' if @workout.movement.name == "m.name" %>><%=m.name%></option>
+    <% end %>
+  </select>
+
+
+  Weight: <input type="text" name="weight">
+
+  Reps: <input type="text" name="reps">
+
+  <!-- how to do this so it dynamically adds another field above? -->
+  <p>+ add a movement</p>
+
+  <p><input type="submit" value="Add Workout"></p>
+</form>

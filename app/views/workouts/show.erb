@@ -4,14 +4,11 @@ This is the workout
 
 Display movements and other info here
 
-<p></p>
-
-<a href="/workouts/<%= @workout.id %>/edit">Edit this workout</a> |
-<a href="/workouts/<%= @workout.id %>/delete">Delete this workout</a>
-
+<p>
 <form action="/workouts/<%= @workout.id %>/edit" method="get">
   <input type="submit" value="Edit">
 </form>
+</p>
 
 <form action="/workouts/<%= @workout.id %>" method="post">
   <input type="hidden" name="_method" value="DELETE">
