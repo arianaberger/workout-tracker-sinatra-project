@@ -9,7 +9,8 @@ class WorkoutsController < ApplicationController
   end
 
   post '/workouts/new' do
-    
+    @workout = Workout.create(params[:workout])
+    redirect to '/workouts'
   end
 
   get '/workouts/:id' do

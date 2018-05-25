@@ -30,7 +30,8 @@ ActiveRecord::Schema.define(version: 2018_05_24_142203) do
   end
 
   create_table "workouts", force: :cascade do |t|
-    t.string "type"
+    t.string "name"
+    t.string "time"
     t.integer "user_id"
     t.datetime "uploaded_at"
   end
