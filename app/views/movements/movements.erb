@@ -1,0 +1,10 @@
+<h3>Your Movements</h3>
+
+<ul>
+<% Movement.all.each do |m| %>
+  <li><%= m.name %></li>
+  <% end %>
+</ul>
+
+
++ <a href="/movements/new">Add a movement</a>
