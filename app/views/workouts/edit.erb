@@ -22,7 +22,7 @@ Enter time: <input type="text" name="workout[time]" value="<%= @workout.time %>"
     <select name="movement[name]">
     <% Movement.all.each do |m| %>
     <!-- how to have correct movement selected? needs to find it first -->
-    <option value="<%=m.name%>" <%= 'selected' if @movement.name == "m.name" %>><%=m.name%></option>
+    <option value="<%=m.name%>" <%= 'selected' if @movement.name.downcase == "m.name" %>><%=m.name%></option>
     <% end %>
   </select>
 

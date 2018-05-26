@@ -32,8 +32,8 @@ class WorkoutsController < ApplicationController
     @workout = Workout.find_by_id(params[:id])
     # does @w_m need to be an array, so I can put multiple movements in it?
     @w_m = WorkoutMovement.find_by(params[:id])
+    #how to iterate through the movements and match them up so they are properly selected in edit form?
     @movement = Movement.find_by_id(@w_m.movement_id)
-    # binding.pry
     erb :'/workouts/edit'
   end
 
@@ -41,10 +41,9 @@ class WorkoutsController < ApplicationController
     @workout = Workout.find_by_id(params[:id])
     @workout.update(params[:workout])
     @movement = Movement.find_by(:name => params[:movement][:name])
-    binding.pry
     @w_m = WorkoutMovement.update(:workout_id => @workout.id, :movement_id => @movement.id, :weight => params[:weight], :reps => params[:reps])
 
-    redirect to "/workouts/<%= @workout.id %>"
+    redirect to "/workouts/#{@workout.id}"
   end
 
   delete '/workouts/:id' do
