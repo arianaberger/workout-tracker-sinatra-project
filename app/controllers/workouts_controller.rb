@@ -38,11 +38,16 @@ class WorkoutsController < ApplicationController
   end
 
   patch '/workouts/:id' do
+    @workout = Workout.find_by_id(params[:id])
+    @workout.update(params[:workout])
+    @movement = Movement.find_by(:name => params[:movement][:name])
+    binding.pry
+    @w_m = WorkoutMovement.update(:workout_id => @workout.id, :movement_id => @movement.id, :weight => params[:weight], :reps => params[:reps])
 
+    redirect to "/workouts/<%= @workout.id %>"
   end
 
   delete '/workouts/:id' do
-    #workouts with id 1 & 2 are not deleting! otherwise it seems to work fine
     if logged_in?
     @workout = Workout.find_by_id(params[:id])
       if @workout && @workout.user == current_user
