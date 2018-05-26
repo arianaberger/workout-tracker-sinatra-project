@@ -16,9 +16,9 @@ class UsersController < ApplicationController
       redirect to '/signup'
     end
 
-    if params[:username] != "" && params[:password] != ""
+    if params[:username] != "" && params[:password] != "" && !@check_username
       @user = User.create(params[:user])
-      session[:user_id] = @user.id
+      session[:user_id] = @user.id #why is this not resetting the user's workouts?
       redirect to '/workouts'
     else
       #flash message is not showing up!
