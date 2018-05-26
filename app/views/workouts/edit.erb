@@ -1,7 +1,7 @@
 <h3>Edit workout</h3>
 
 <p>
-<form action="/workouts/new" method="POST">
+<form action="/workouts/<%= @workout.id %>" method="POST">
   <input id="hidden" type="hidden" name="_method" value="PATCH">
 
   Type:
@@ -22,7 +22,7 @@ Enter time: <input type="text" name="workout[time]" value="<%= @workout.time %>"
     <select name="movement[name]">
     <% Movement.all.each do |m| %>
     <!-- how to have correct movement selected? needs to find it first -->
-    <option value="<%=m.name%>"><%=m.name%></option>
+    <option value="<%=m.name%>" <%= 'selected' if @movement.name == "m.name" %>><%=m.name%></option>
     <% end %>
   </select>
 
@@ -34,5 +34,5 @@ Enter time: <input type="text" name="workout[time]" value="<%= @workout.time %>"
   <!-- how to do this so it dynamically adds another field above? -->
   <p>+ add a movement</p>
 
-  <p><input type="submit" value="Add Workout"></p>
+  <p><input type="submit" value="Edit Workout"></p>
 </form>

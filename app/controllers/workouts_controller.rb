@@ -32,6 +32,7 @@ class WorkoutsController < ApplicationController
     @workout = Workout.find_by_id(params[:id])
     # does @w_m need to be an array, so I can put multiple movements in it?
     @w_m = WorkoutMovement.find_by(params[:id])
+    @movement = Movement.find_by_id(@w_m.movement_id)
     # binding.pry
     erb :'/workouts/edit'
   end
