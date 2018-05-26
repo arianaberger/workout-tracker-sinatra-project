@@ -1,10 +1,15 @@
 <h3>Your Movements</h3>
 
-<ul>
+
 <% Movement.all.each do |m| %>
-  <li><%= m.name %></li>
+  <p>
+        <form action="/movements/<%= m.id %>" method="post">
+          <input type="hidden" name="_method" value="DELETE">
+          <input type="submit" value="Delete">
+
+    <%= m.name %>
+  </p>
   <% end %>
-</ul>
 
 
 + <a href="/movements/new">Add a movement</a></br>

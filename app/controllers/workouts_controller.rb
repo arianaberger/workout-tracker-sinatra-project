@@ -8,8 +8,7 @@ class WorkoutsController < ApplicationController
     erb :'/workouts/new'
   end
 
-  post '/workouts/new' do
-    # binding.pry
+  post '/workouts/new' do #NEED INTERATION THROUGH EACH MOVEMENT
     #creating a new workout, adds it to the user and saves user
     @workout = Workout.create(params[:workout])
     current_user.workouts << @workout
@@ -28,7 +27,7 @@ class WorkoutsController < ApplicationController
     erb :'/workouts/show'
   end
 
-  get '/workouts/:id/edit' do
+  get '/workouts/:id/edit' do #NEEDS WORK
     @workout = Workout.find_by_id(params[:id])
     # does @w_m need to be an array, so I can put multiple movements in it?
     @w_m = WorkoutMovement.find_by(params[:id])
