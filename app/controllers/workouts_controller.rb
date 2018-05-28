@@ -38,17 +38,30 @@ class WorkoutsController < ApplicationController
   end
 
   get '/workouts/:id' do
-    @workout = Workout.find_by_id(params[:id])
-    erb :'/workouts/show'
+    if logged_in?
+      @workout = Workout.find_by_id(params[:id])
+      erb :'/workouts/show'
+    else
+      redirect to '/login'
+    end
   end
 
   get '/workouts/:id/edit' do #NEEDS WORK
-    @workout = Workout.find_by_id(params[:id])
-    # does @w_m need to be an array, so I can put multiple movements in it?
-    @w_m = WorkoutMovement.find_by(params[:id])
-    #how to iterate through the movements and match them up so they are properly selected in edit form?
-    @movement = Movement.find_by_id(@w_m.movement_id)
-    erb :'/workouts/edit'
+    if logged_in?
+      @workout = Workout.find_by_id(params[:id])
+      if @workout && @workout.user == current_user
+
+      # does @w_m need to be an array, so I can put multiple movements in it?
+      @w_m = WorkoutMovement.find_by(params[:id])
+      #how to iterate through the movements and match them up so they are properly selected in edit form?
+      @movement = Movement.find_by_id(@w_m.movement_id)
+      erb :'/workouts/edit'
+      else
+        redirect to '/workouts'
+      end
+    else
+      redirect to '/login'
+    end
   end
 
   patch '/workouts/:id' do
