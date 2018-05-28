@@ -5,7 +5,6 @@ class WorkoutsController < ApplicationController
   get '/workouts' do
     if logged_in?
       @workouts = current_user.workouts
-      #this was previously Workouts.all but it was not updating to the user!
       erb :'/workouts/workouts'
     else
       redirect to '/login'
@@ -39,6 +38,8 @@ class WorkoutsController < ApplicationController
   get '/workouts/:id' do
     if logged_in?
       @workout = Workout.find_by_id(params[:id])
+      @movements = []
+      @movements << WorkoutMovement.find_by_id(@workout.id)
       erb :'/workouts/show'
     else
       redirect to '/login'

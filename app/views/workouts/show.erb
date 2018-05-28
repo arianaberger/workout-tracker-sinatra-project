@@ -2,7 +2,15 @@ This is the workout
 
 <h3><%= @workout.name %></h3>
 
-Display movements and other info here
+Time: <%=@workout.time%>
+
+<p></p>
+
+Movements:</br>
+  <%@movements.each do |m|%>
+    <% movement = Movement.find_by_id(m.movement_id) %>
+    <%=movement.name%> | Weight: <%=m.weight%> Reps: <%=m.reps%>
+  <%end%>
 
 <p>
 <form action="/workouts/<%= @workout.id %>/edit" method="get">
