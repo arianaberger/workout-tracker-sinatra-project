@@ -4,7 +4,8 @@ class WorkoutsController < ApplicationController
 
   get '/workouts' do
     if logged_in?
-      @workouts = Workout.all
+      @workouts = current_user.workouts
+      #this was previously Workouts.all but it was not updating to the user!
       erb :'/workouts/workouts'
     else
       redirect to '/login'
