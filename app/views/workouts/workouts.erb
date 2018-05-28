@@ -4,13 +4,13 @@
 
 <p>
 
-<% if Workout.all.empty? %>
+<% if @workouts.empty? %>
 You have no workouts yet!
 <% else %>
 
 <!-- display workouts -->
 
-  <% Workout.all.each do |w| %>
+  <% @workouts.each do |w| %>
 
     <h4><a href="/workouts/<%= w.id %>">| <%= w.name %></a></h4>
   <% end %>
