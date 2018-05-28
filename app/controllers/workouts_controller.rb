@@ -92,6 +92,7 @@ class WorkoutsController < ApplicationController
   end
 
   helpers do
+    #need to get this helper method working!
     def update_movements(movements_array)
       movements_array.each do |m|
         m.update(:workout_id => @workout.id, :movement_id => @movement.id, :weight => params[:weight], :reps => params[:reps])
