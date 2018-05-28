@@ -1,3 +1,5 @@
+require 'rack-flash'
+
 class WorkoutsController < ApplicationController
 
   get '/workouts' do
