@@ -1,4 +1,7 @@
 require 'rack-flash'
+require 'rack'
+enable :sessions
+use Rack::Flash
 
 class SessionsController < ApplicationController
 
@@ -19,7 +22,9 @@ class SessionsController < ApplicationController
         end
     else
       #flash message is not showing up!
+      # binding.pry
       flash[:message] = "Please enter a username and password"
+      binding.pry
       redirect to '/login'
     end
   end
