@@ -1,5 +1,7 @@
 <h3>Create a new workout</h3>
 
+<i>Missing a movement? Make sure to first manage your movements <a href="/movements">here</a>.</i>
+
 <p>
 <form action="/workouts" method="POST">
   <!-- add different method for date input later? -->
@@ -14,59 +16,41 @@
 Enter time: <input type="text" name="workout[time]">
 </p>
 
-  <p>Movement(s):</br>
-    <i>Missing a movement? Make sure to first manage your movements <a href="/movements">here</a>.</i>
-  </p>
+  <p>Movement(s):</p>
 
 <!-- Can this be simplified? -->
-    <select name="movement[name]">
+    <select name="movement_1[name]">
+    <option value="select" selected>Select Movement</option>
     <% Movement.all.each do |m| %>
-    <option value="<%=m.name%>"><%=m.name%></option>
+      <option value="<%=m.name%>"><%=m.name%></option>
     <% end %>
   </select>
 
-  Weight: <input type="text" name="weight">
-  Reps: <input type="text" name="reps">
+  Weight: <input type="text" name="movement_1[weight]">
+  Reps: <input type="text" name="movement_1[reps]">
 
 </br>
-  <select name="movement[name]">
+  <select name="movement_2[name]">
+  <option value="select" selected>Select Movement</option>
   <% Movement.all.each do |m| %>
-  <option value="<%=m.name%>"><%=m.name%></option>
+    <option value="<%=m.name%>"><%=m.name%></option>
   <% end %>
 </select>
 
-Weight: <input type="text" name="weight">
-Reps: <input type="text" name="reps">
+Weight: <input type="text" name="movement_2[weight]">
+Reps: <input type="text" name="movement_2[reps]">
 
 </br>
-  <select name="movement[name]">
+  <select name="movement_3[name]">
+  <option value="select" selected>Select Movement</option>
   <% Movement.all.each do |m| %>
-  <option value="<%=m.name%>"><%=m.name%></option>
+    <option value="<%=m.name%>"><%=m.name%></option>
   <% end %>
 </select>
 
-Weight: <input type="text" name="weight">
-Reps: <input type="text" name="reps">
+Weight: <input type="text" name="movement_3[weight]">
+Reps: <input type="text" name="movement_3[reps]">
 
-</br>
-  <select name="movement[name]">
-  <% Movement.all.each do |m| %>
-  <option value="<%=m.name%>"><%=m.name%></option>
-  <% end %>
-</select>
-
-Weight: <input type="text" name="weight">
-Reps: <input type="text" name="reps">
-
-</br>
-  <select name="movement[name]">
-  <% Movement.all.each do |m| %>
-  <option value="<%=m.name%>"><%=m.name%></option>
-  <% end %>
-</select>
-
-Weight: <input type="text" name="weight">
-Reps: <input type="text" name="reps">
 
   <p><input type="submit" value="Add Workout"></p>
 </form>

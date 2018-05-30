@@ -1,5 +1,3 @@
-# require 'rack-flash'
-
 class WorkoutsController < ApplicationController
 
   get '/workouts' do
@@ -21,10 +19,16 @@ class WorkoutsController < ApplicationController
 
   post '/workouts' do #NEED INTERATION THROUGH EACH MOVEMENT
     if logged_in?
+      binding.pry
       @workout = Workout.create(params[:workout])
       current_user.workouts << @workout
-      #need to iterate through each workout added in the form
-      #movements need to be specific to the user as well!
+
+      movements_array = []
+      collect_movements(movements_array, params)
+
+      #iterate through movements with helper method
+        update_movements()
+        @movement =
       @movement = Movement.find_by(:name => params[:movement][:name])
       @w_m = WorkoutMovement.create(:workout_id => @workout.id, :movement_id => @movement.id, :weight => params[:weight], :reps => params[:reps])
       redirect to '/workouts'
@@ -92,6 +96,10 @@ class WorkoutsController < ApplicationController
   end
 
   helpers do
+
+    def collect_movements(movements_array, params)
+      params
+
     #need to get this helper method working!
     def update_movements(movements_array)
       movements_array.each do |m|
