@@ -1,8 +1,3 @@
-# require 'rack-flash'
-# require 'rack'
-# enable :sessions
-# use Rack::Flash
-
 class SessionsController < ApplicationController
 
   get '/login' do
@@ -16,15 +11,11 @@ class SessionsController < ApplicationController
           session[:user_id] = @user.id
           redirect to '/workouts'
         else
-          #flash message is not showing up!
           flash[:message] = "Login information incorrect, please try again"
           redirect to '/login'
         end
     else
-      #flash message is not showing up!
-      # binding.pry
-      flash[:message] = "Please enter a username and password"
-      binding.pry
+      flash[:message] = "Please enter a both username and password"
       redirect to '/login'
     end
   end
