@@ -11,11 +11,11 @@ class SessionsController < ApplicationController
           session[:user_id] = @user.id
           redirect to '/workouts'
         else
-          flash[:message] = "Login information incorrect, please try again"
+          flash[:message] = "Login information incorrect, please try again."
           redirect to '/login'
         end
     else
-      flash[:message] = "Please enter a both username and password"
+      flash[:message] = "Please fill out both fields."
       redirect to '/login'
     end
   end

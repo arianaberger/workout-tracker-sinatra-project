@@ -2,9 +2,9 @@
 
 <!-- set CSS for flash messages! -->
 <p>
-<% if flash.has?(:message) %>
-  <%= flash[:message] %>
-<% end %>
+<% if flash(:message) %>
+  <font color="red"><%= flash[:message] %></font>
+  <% end %>
 </p>
 
 <p>Please enter a username and password:</p>
