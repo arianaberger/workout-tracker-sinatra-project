@@ -1,7 +1,7 @@
-require 'rack-flash'
-require 'rack'
-enable :sessions
-use Rack::Flash
+# require 'rack-flash'
+# require 'rack'
+# enable :sessions
+# use Rack::Flash
 
 class SessionsController < ApplicationController
 

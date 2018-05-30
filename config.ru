@@ -6,9 +6,9 @@ require './config/environment'
 
 use Rack::MethodOverride
 
-# use WorkoutsController
 use MovementsController
 use UsersController
 use SessionsController
 use WorkoutsController
+
 run ApplicationController

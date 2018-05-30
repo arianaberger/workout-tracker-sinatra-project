@@ -1,4 +1,4 @@
-require 'rack-flash'
+# require 'rack-flash'
 
 class WorkoutsController < ApplicationController
 
