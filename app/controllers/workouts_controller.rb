@@ -19,18 +19,11 @@ class WorkoutsController < ApplicationController
 
   post '/workouts' do #NEED INTERATION THROUGH EACH MOVEMENT
     if logged_in?
-      binding.pry
       @workout = Workout.create(params[:workout])
       current_user.workouts << @workout
 
-      movements_array = []
-      collect_movements(movements_array, params)
+      update_movements(params, @workout)
 
-      #iterate through movements with helper method
-        update_movements()
-        @movement =
-      @movement = Movement.find_by(:name => params[:movement][:name])
-      @w_m = WorkoutMovement.create(:workout_id => @workout.id, :movement_id => @movement.id, :weight => params[:weight], :reps => params[:reps])
       redirect to '/workouts'
     else
       redirect to '/login'
@@ -96,15 +89,17 @@ class WorkoutsController < ApplicationController
   end
 
   helpers do
-
-    def collect_movements(movements_array, params)
-      params
-
     #need to get this helper method working!
-    def update_movements(movements_array)
-      movements_array.each do |m|
-        m.update(:workout_id => @workout.id, :movement_id => @movement.id, :weight => params[:weight], :reps => params[:reps])
-      end
+    def update_movements(params, workout)
+      #do iteration with #1-5 so the code below isn't repeated?
+      #save each movement into an array and iterate of them to create a new WorkoutMovement?
+        movement_1 = Movement.find_by(:name => params[:movement_1][:name])
+        movement_2 = Movement.find_by(:name => params[:movement_2][:name])
+        movement_3 = Movement.find_by(:name => params[:movement_3][:name]) unless params[:movement_3][:name] == "select"
+binding.pry
+        WorkoutMovement.create(:workout_id => workout.id, :movement_id => movement_1.id, :weight => params[:movement_1][:weight], :reps => params[:movement_1][:reps])
+        WorkoutMovement.create(:workout_id => workout.id, :movement_id => movement_1.id, :weight => params[:movement_1][:weight], :reps => params[:movement_1][:reps])
+        WorkoutMovement.create(:workout_id => workout.id, :movement_id => movement_3.id, :weight => params[:movement_3][:weight], :reps => params[:movement_3][:reps]) unless movement_3 == nil
     end
   end
 end
