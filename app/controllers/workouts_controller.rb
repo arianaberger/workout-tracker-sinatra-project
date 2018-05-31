@@ -47,10 +47,15 @@ class WorkoutsController < ApplicationController
     if logged_in?
       @workout = Workout.find_by_id(params[:id])
       if @workout && @workout.user == current_user
-        @workout_movements = []
-        collect_workout_movements(@workout_movements, @workout)
         @user_movements = []
         user_movements(@user_movements)
+
+        @workout_movements = []
+        collect_workout_movements(@workout_movements, @workout)
+        
+        @wm_names = []
+        collect_workout_movement_names(@user_movements, @wm_names)
+        binding.pry
         erb :'/workouts/edit'
       else
         redirect to '/workouts'
@@ -111,6 +116,13 @@ class WorkoutsController < ApplicationController
         end
       end
       array
+    end
+
+    def collect_workout_movement_names(wm_array, names_array)
+      wm_array.each do |wm|
+        names_array << wm.name
+      end
+      names_array
     end
   end
 end

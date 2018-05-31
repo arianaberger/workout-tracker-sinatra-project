@@ -21,8 +21,8 @@ Enter time: <input type="text" name="workout[time]" value="<%= @workout.time %>"
 
     <select name="movement_1[name]">
     <option value="select" selected>Select Movement</option>
-    <% @movements.each do |m| %>
-      <option value="<%=m.name%>" <%= 'selected' if m.name.downcase == "m.name" %>>><%=m.name%></option>
+    <% @user_movements.each do |m| %>
+      <option value="<%=m.name%>" <%= 'selected' if m.name.downcase == @wm_names[0] %>>><%=m.name%></option>
     <% end %>
   </select>
 
