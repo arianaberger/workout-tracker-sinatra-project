@@ -34,7 +34,9 @@ class WorkoutsController < ApplicationController
     if logged_in?
       @workout = Workout.find_by_id(params[:id])
       @movements = []
-      @movements << WorkoutMovement.find_by_id(@workout.id)
+      collect_movements(@movements, @workout)
+      # @movements << WorkoutMovement.find_each(:workout_id => params[:id]) --> I can't remove the LIMIT=1 here!
+      binding.pry
       erb :'/workouts/show'
     else
       redirect to '/login'
@@ -100,6 +102,15 @@ binding.pry
         WorkoutMovement.create(:workout_id => workout.id, :movement_id => movement_1.id, :weight => params[:movement_1][:weight], :reps => params[:movement_1][:reps])
         WorkoutMovement.create(:workout_id => workout.id, :movement_id => movement_1.id, :weight => params[:movement_1][:weight], :reps => params[:movement_1][:reps])
         WorkoutMovement.create(:workout_id => workout.id, :movement_id => movement_3.id, :weight => params[:movement_3][:weight], :reps => params[:movement_3][:reps]) unless movement_3 == nil
+    end
+
+    def collect_movements(array, workout)
+      WorkoutMovement.all.each do |wm|
+        if wm.workout_id == workout.id
+          array << wm
+        end
+      end
+      array
     end
   end
 end

@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   has_many :workouts
+  has_many :movements
   has_secure_password #this links bcrypt with ActiveRecord
 
   def slug
