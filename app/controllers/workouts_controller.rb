@@ -35,7 +35,6 @@ class WorkoutsController < ApplicationController
       @workout = Workout.find_by_id(params[:id])
       @movements = []
       collect_movements(@movements, @workout)
-      # @movements << WorkoutMovement.find_each(:workout_id => params[:id]) --> I can't remove the LIMIT=1 here!
       binding.pry
       erb :'/workouts/show'
     else
@@ -98,7 +97,7 @@ class WorkoutsController < ApplicationController
         movement_1 = Movement.find_by(:name => params[:movement_1][:name])
         movement_2 = Movement.find_by(:name => params[:movement_2][:name])
         movement_3 = Movement.find_by(:name => params[:movement_3][:name]) unless params[:movement_3][:name] == "select"
-binding.pry
+
         WorkoutMovement.create(:workout_id => workout.id, :movement_id => movement_1.id, :weight => params[:movement_1][:weight], :reps => params[:movement_1][:reps])
         WorkoutMovement.create(:workout_id => workout.id, :movement_id => movement_1.id, :weight => params[:movement_1][:weight], :reps => params[:movement_1][:reps])
         WorkoutMovement.create(:workout_id => workout.id, :movement_id => movement_3.id, :weight => params[:movement_3][:weight], :reps => params[:movement_3][:reps]) unless movement_3 == nil
@@ -114,3 +113,24 @@ binding.pry
     end
   end
 end
+
+#trying to get the hash working otherwise I have to find the movement name in the view page!!
+# also tried just doing this in one line, but --> I can't remove the LIMIT=1 !
+# @movements << WorkoutMovement.find_each(:workout_id => params[:id])
+
+  #   def collect_movements(array, workout)
+  #     WorkoutMovement.all.each do |wm|
+  #       binding.pry
+  #       if wm.workout_id == workout.id
+  #         movement = Movement.find_by_id(wm.movement_id)
+  #         hash = {movement.name => {
+  #           weight: wm.weight,
+  #           reps: wm.reps
+  #           }}
+  #         array << hash
+  #         binding.pry
+  #       end
+  #     end
+  #     array
+  #   end
+  # end

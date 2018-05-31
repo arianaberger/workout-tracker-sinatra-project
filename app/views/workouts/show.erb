@@ -10,6 +10,7 @@ Movements:</br>
   <%@movements.each do |m|%>
     <% movement = Movement.find_by_id(m.movement_id) %>
     <%=movement.name%> | Weight: <%=m.weight%> Reps: <%=m.reps%>
+  </br>
   <%end%>
 
 <p>
