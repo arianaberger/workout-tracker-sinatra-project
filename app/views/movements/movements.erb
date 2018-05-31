@@ -1,7 +1,7 @@
 <h3>Your Movements</h3>
 
 
-<% Movement.all.each do |m| %>
+<% @user_movements.each do |m| %>
   <p>
         <form action="/movements/<%= m.id %>" method="post">
           <input type="hidden" name="_method" value="DELETE">

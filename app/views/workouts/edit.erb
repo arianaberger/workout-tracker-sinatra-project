@@ -19,6 +19,23 @@ Enter time: <input type="text" name="workout[time]" value="<%= @workout.time %>"
     <i>Missing a movement? Make sure to first manage your movements <a href="/movements">here</a>.</i>
   </p>
 
+  Movements:</br>
+    <%@movements.each do |m|%>
+      <% movement = Movement.find_by_id(m.movement_id) %>
+      <%=movement.name%> | Weight: <%=m.weight%> Reps: <%=m.reps%>
+    </br>
+    <%end%>
+
+    <select name="movement_1[name]">
+    <option value="select" selected>Select Movement</option>
+    <% Movement.all.each do |m| %>
+      <option value="<%=m.name%>" <%= 'selected' if @movement.name.downcase == "m.name" %>>><%=m.name%></option>
+    <% end %>
+  </select>
+
+  Weight: <input type="text" name="movement_1[weight]">
+  Reps: <input type="text" name="movement_1[reps]">
+
     <select name="movement[name]">
     <% Movement.all.each do |m| %>
     <!-- how to have correct movement selected? needs to find it first -->
@@ -26,13 +43,10 @@ Enter time: <input type="text" name="workout[time]" value="<%= @workout.time %>"
     <% end %>
   </select>
 
-
   Weight: <input type="text" name="weight" value="<%= @w_m.weight %>">
 
   Reps: <input type="text" name="reps" value="<%= @w_m.reps %>">
 
-  <!-- how to do this so it dynamically adds another field above? -->
-  <p>+ add a movement</p>
 
   <p><input type="submit" value="Edit Workout"></p>
 </form>
