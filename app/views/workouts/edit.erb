@@ -19,17 +19,10 @@ Enter time: <input type="text" name="workout[time]" value="<%= @workout.time %>"
     <i>Missing a movement? Make sure to first manage your movements <a href="/movements">here</a>.</i>
   </p>
 
-  Movements:</br>
-    <%@movements.each do |m|%>
-      <% movement = Movement.find_by_id(m.movement_id) %>
-      <%=movement.name%> | Weight: <%=m.weight%> Reps: <%=m.reps%>
-    </br>
-    <%end%>
-
     <select name="movement_1[name]">
     <option value="select" selected>Select Movement</option>
-    <% Movement.all.each do |m| %>
-      <option value="<%=m.name%>" <%= 'selected' if @movement.name.downcase == "m.name" %>>><%=m.name%></option>
+    <% @movements.each do |m| %>
+      <option value="<%=m.name%>" <%= 'selected' if m.name.downcase == "m.name" %>>><%=m.name%></option>
     <% end %>
   </select>
 

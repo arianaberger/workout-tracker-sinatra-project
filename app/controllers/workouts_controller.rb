@@ -11,8 +11,8 @@ class WorkoutsController < ApplicationController
 
   get '/workouts/new' do
     if logged_in?
-      @movements = []
-      user_movements(@movements)
+      @user_movements = []
+      user_movements(@user_movements)
       erb :'/workouts/new'
     else
       redirect to '/login'
@@ -34,8 +34,8 @@ class WorkoutsController < ApplicationController
   get '/workouts/:id' do
     if logged_in?
       @workout = Workout.find_by_id(params[:id])
-      @movements = []
-      collect_movements(@movements, @workout)
+      @workout_movements = []
+      collect_workout_movements(@workout_movements, @workout)
       # binding.pry
       erb :'/workouts/show'
     else
@@ -47,8 +47,10 @@ class WorkoutsController < ApplicationController
     if logged_in?
       @workout = Workout.find_by_id(params[:id])
       if @workout && @workout.user == current_user
-        @movements = []
-        collect_movements(@movements, @workout)
+        @workout_movements = []
+        collect_workout_movements(@workout_movements, @workout)
+        @user_movements = []
+        user_movements(@user_movements)
         erb :'/workouts/edit'
       else
         redirect to '/workouts'
@@ -102,7 +104,7 @@ class WorkoutsController < ApplicationController
         WorkoutMovement.create(:workout_id => workout.id, :movement_id => movement_3.id, :weight => params[:movement_3][:weight], :reps => params[:movement_3][:reps]) unless movement_3 == nil
     end
 
-    def collect_movements(array, workout)
+    def collect_workout_movements(array, workout)
       WorkoutMovement.all.each do |wm|
         if wm.workout_id == workout.id
           array << wm
