@@ -21,7 +21,7 @@ Enter time: <input type="text" name="workout[time]">
 <!-- Can this be simplified? -->
     <select name="movement_1[name]">
     <option value="select" selected>Select Movement</option>
-    <% Movement.all.each do |m| %>
+    <% @movements.each do |m| %>
       <option value="<%=m.name%>"><%=m.name%></option>
     <% end %>
   </select>
@@ -32,7 +32,7 @@ Enter time: <input type="text" name="workout[time]">
 </br>
   <select name="movement_2[name]">
   <option value="select" selected>Select Movement</option>
-  <% Movement.all.each do |m| %>
+  <% @movements.each do |m| %>
     <option value="<%=m.name%>"><%=m.name%></option>
   <% end %>
 </select>
@@ -43,7 +43,7 @@ Reps: <input type="text" name="movement_2[reps]">
 </br>
   <select name="movement_3[name]">
   <option value="select" selected>Select Movement</option>
-  <% Movement.all.each do |m| %>
+  <% @movements.each do |m| %>
     <option value="<%=m.name%>"><%=m.name%></option>
   <% end %>
 </select>

@@ -28,5 +28,14 @@ class ApplicationController < Sinatra::Base
       @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
     end
 
+    def user_movements(array)
+      Movement.all.each do |m|
+        if m.user_id == current_user.id
+          array << m
+        end
+      end
+      array
+    end
+
   end
 end

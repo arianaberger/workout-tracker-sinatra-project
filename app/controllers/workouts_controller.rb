@@ -11,6 +11,8 @@ class WorkoutsController < ApplicationController
 
   get '/workouts/new' do
     if logged_in?
+      @movements = []
+      user_movements(@movements)
       erb :'/workouts/new'
     else
       redirect to '/login'
@@ -91,12 +93,12 @@ class WorkoutsController < ApplicationController
     def update_movements(params, workout)
       #do iteration with #1-5 so the code below isn't repeated?
       #save each movement into an array and iterate of them to create a new WorkoutMovement?
-        movement_1 = Movement.find_by(:name => params[:movement_1][:name])
-        movement_2 = Movement.find_by(:name => params[:movement_2][:name])
+        movement_1 = Movement.find_by(:name => params[:movement_1][:name]) unless params[:movement_1][:name] == "select"
+        movement_2 = Movement.find_by(:name => params[:movement_2][:name]) unless params[:movement_2][:name] == "select"
         movement_3 = Movement.find_by(:name => params[:movement_3][:name]) unless params[:movement_3][:name] == "select"
 
-        WorkoutMovement.create(:workout_id => workout.id, :movement_id => movement_1.id, :weight => params[:movement_1][:weight], :reps => params[:movement_1][:reps])
-        WorkoutMovement.create(:workout_id => workout.id, :movement_id => movement_1.id, :weight => params[:movement_1][:weight], :reps => params[:movement_1][:reps])
+        WorkoutMovement.create(:workout_id => workout.id, :movement_id => movement_1.id, :weight => params[:movement_1][:weight], :reps => params[:movement_1][:reps]) unless movement_1 == nil
+        WorkoutMovement.create(:workout_id => workout.id, :movement_id => movement_1.id, :weight => params[:movement_2][:weight], :reps => params[:movement_2][:reps]) unless movement_2 == nil
         WorkoutMovement.create(:workout_id => workout.id, :movement_id => movement_3.id, :weight => params[:movement_3][:weight], :reps => params[:movement_3][:reps]) unless movement_3 == nil
     end
 
