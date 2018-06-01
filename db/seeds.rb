@@ -30,11 +30,11 @@ movements.each do |u|
 end
 
 workout_movements = [
-  {workout_id: 1, movement_id: 1, weight: 85, reps: 5},
-  {workout_id: 1, movement_id: 2, weight: 40, reps: 10},
-  {workout_id: 2, movement_id: 1, weight: 75, reps: 20},
-  {workout_id: 3, movement_id: 1, weight: 65, reps: 3},
-  {workout_id: 3, movement_id: 2, weight: 30, reps: 12}
+  {workout_id: 1, movement_id: 1, user_id: 1, weight: 85, reps: 5},
+  {workout_id: 1, movement_id: 2, user_id: 1, weight: 40, reps: 10},
+  {workout_id: 2, movement_id: 1, user_id: 1, weight: 75, reps: 20},
+  {workout_id: 3, movement_id: 1, user_id: 2, weight: 65, reps: 3},
+  {workout_id: 3, movement_id: 2, user_id: 2, weight: 30, reps: 12}
 ]
 
 workout_movements.each do |u|
