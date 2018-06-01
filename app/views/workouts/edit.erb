@@ -22,23 +22,35 @@ Enter time: <input type="text" name="workout[time]" value="<%= @workout.time %>"
     <select name="movement_1[name]">
     <option value="select" selected>Select Movement</option>
     <% @user_movements.each do |m| %>
-      <option value="<%=m.name%>" <%= 'selected' if m.name.downcase == @wm_names[0] %>>><%=m.name%></option>
+      <option value="<%=m.name%>" <%= 'selected' if @workout_movements[0] && m.name.downcase == @workout_movements[0].keys[0] %>><%=m.name%></option>
+    <% end %>
+  </select>
+  Weight: <input type="text" name="movement_1[weight]" <%= value=@workout_movements[0].values[0][:weight] unless @workout_movements[0] == nil %>>
+  Reps: <input type="text" name="movement_1[reps]" value="<%= @workout_movements[0].values[0][:reps]%>">
+  <%binding.pry%>
+
+</br>
+    <select name="movement_2[name]">
+    <option value="select" selected>Select Movement</option>
+    <% @user_movements.each do |m| %>
+      <option value="<%=m.name%>" <%= 'selected' if @workout_movements[1] && m.name.downcase == @workout_movements[1].keys[0] %>><%=m.name%></option>
     <% end %>
   </select>
 
-  Weight: <input type="text" name="movement_1[weight]">
-  Reps: <input type="text" name="movement_1[reps]">
+  Weight: <input type="text" name="movement_2[weight]" value="<%= @workout_movements[1].values[0][:weight]%>">
+  Reps: <input type="text" name="movement_2[reps]" value="<%= @workout_movements[1].values[0][:reps]%>">
 
-    <select name="movement[name]">
-    <% Movement.all.each do |m| %>
-    <!-- how to have correct movement selected? needs to find it first -->
-    <option value="<%=m.name%>" <%= 'selected' if @movement.name.downcase == "m.name" %>><%=m.name%></option>
-    <% end %>
+</br>
+
+  <select name="movement_3[name]">
+  <option value="select" selected>Select Movement</option>
+  <% @user_movements.each do |m| %>
+  <option value="<%=m.name%>" <%= 'selected' if @workout_movements[2] && m.name.downcase == @workout_movements[2].keys[0] %>><%=m.name%></option>
+  <% end %>
   </select>
 
-  Weight: <input type="text" name="weight" value="<%= @w_m.weight %>">
-
-  Reps: <input type="text" name="reps" value="<%= @w_m.reps %>">
+  Weight: <input type="text" name="movement_1[weight]" <%= value=@workout_movements[2].values[0][:weight] unless @workout_movements[2] == nil %>>
+  Reps: <input type="text" name="movement_3[reps]" value="<%= @workout_movements[2].values[0][:reps]%>">
 
 
   <p><input type="submit" value="Edit Workout"></p>
