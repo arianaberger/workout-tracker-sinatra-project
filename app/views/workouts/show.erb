@@ -9,8 +9,7 @@ Time: <%=@workout.time%>
 <!-- iterate through movements in @workout_movements array and display each -->
 Movements:</br>
   <%@workout_movements.each do |m|%>
-    <% movement = Movement.find_by_id(m.movement_id) %>
-    <%=movement.name%> | Weight: <%=m.weight%> Reps: <%=m.reps%>
+    <%=m.keys[0]%> | Weight: <%=m.values[0][:weight]%> Reps: <%=m.values[0][:reps]%>
   </br>
   <%end%>
 
