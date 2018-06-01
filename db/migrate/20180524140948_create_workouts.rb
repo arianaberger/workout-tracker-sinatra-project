@@ -4,7 +4,7 @@ class CreateWorkouts < ActiveRecord::Migration[5.2]
       t.string :name
       t.string :time
       t.integer :user_id
-      t.timestamp
+      t.timestamps
     end
   end
 end

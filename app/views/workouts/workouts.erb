@@ -12,6 +12,6 @@ You have no workouts yet!
 
   <% @workouts.each do |w| %>
 
-    <h4><a href="/workouts/<%= w.id %>">| <%= w.name %></a></h4>
+    <h4><a href="/workouts/<%= w.id %>">| <%= w.name.upcase %> | created: <%=w.created_at.strftime("%d %b, %Y")%></a></h4>
   <% end %>
 <% end %>
