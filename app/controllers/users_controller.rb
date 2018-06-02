@@ -6,8 +6,6 @@ class UsersController < ApplicationController
   end
 
   post '/signup' do
-    binding.pry
-
     @check_username = User.find_by(:username => params[:user][:username])
     if @check_username
       flash[:message] = "Username taken! Please log in if you already have an account."

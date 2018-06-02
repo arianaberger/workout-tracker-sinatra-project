@@ -55,7 +55,6 @@ class WorkoutsController < ApplicationController
 
         @wm_names = []
         collect_workout_movement_names(@user_movements, @wm_names)
-        binding.pry
         erb :'/workouts/edit'
       else
         redirect to '/workouts'
