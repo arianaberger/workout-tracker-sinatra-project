@@ -6,14 +6,15 @@ class UsersController < ApplicationController
   end
 
   post '/signup' do
+    binding.pry
+
     @check_username = User.find_by(:username => params[:user][:username])
     if @check_username
-      #flash message is not showing up!
       flash[:message] = "Username taken! Please log in if you already have an account."
       redirect to '/signup'
     end
 
-    if params[:username] != "" && params[:password] != "" && !@check_username
+    if params[:user][:username] != "" && params[:user][:password] != "" && !@check_username
       @user = User.create(params[:user])
       session[:user_id] = @user.id
       redirect to '/workouts'
