@@ -24,7 +24,7 @@ class WorkoutsController < ApplicationController
       @workout = Workout.create(params[:workout])
       current_user.workouts << @workout
       update_or_create_movements(params, @workout)
-
+      binding.pry
       redirect to '/workouts'
     else
       redirect to '/login'
@@ -36,7 +36,6 @@ class WorkoutsController < ApplicationController
       @workout = Workout.find_by_id(params[:id])
       @workout_movements = []
       collect_workout_movements(@workout_movements, @workout)
-      binding.pry
       erb :'/workouts/show'
     else
       redirect to '/login'
@@ -92,23 +91,21 @@ class WorkoutsController < ApplicationController
     end
   end
 
-  helpers do
-    def update_or_create_movements(params, workout)
-      #do iteration with #1-5 so the code below isn't repeated?
-      #save each movement into an array and iterate of them to create a new WorkoutMovement?
-        movement_1 = Movement.find_by(:name => params[:movement_1][:name]) unless params[:movement_1][:name] == "select"
-        movement_2 = Movement.find_by(:name => params[:movement_2][:name]) unless params[:movement_2][:name] == "select"
-        movement_3 = Movement.find_by(:name => params[:movement_3][:name]) unless params[:movement_3][:name] == "select"
+  
 
-        WorkoutMovement.first_or_create(:workout_id => workout.id, :movement_id => movement_1.id, :weight => params[:movement_1][:weight], :reps => params[:movement_1][:reps], :user_id => current_user.id) unless movement_1 == nil
-        WorkoutMovement.first_or_create(:workout_id => workout.id, :movement_id => movement_2.id, :weight => params[:movement_2][:weight], :reps => params[:movement_2][:reps], :user_id => current_user.id) unless movement_2 == nil
-        WorkoutMovement.first_or_create(:workout_id => workout.id, :movement_id => movement_3.id, :weight => params[:movement_3][:weight], :reps => params[:movement_3][:reps], :user_id => current_user.id) unless movement_3 == nil
-        # binding.pry
+  helpers do
+    def update_or_create_movements(params, workout) #this adds workout_movements to a new workout or updates the workout
+      params.each_with_index do |p, i|
+        if i != 0
+          movement = Movement.find_by(:name => p[1][:name]) unless p[1][:name] == "select"
+          wm = WorkoutMovement.find_or_create_by(:workout_id => workout.id, :movement_id => movement.id, :user_id => current_user.id, :weight => p[1][:weight], :reps => p[1][:reps]) unless movement == nil
+          wm.update(:workout_id => workout.id, :movement_id => movement.id, :user_id => current_user.id, :weight => p[1][:weight], :reps => p[1][:reps]) unless movement == nil
+        end
+      end
     end
 
     def collect_workout_movements(array, workout) #take in an empty array and the workout instance
       WorkoutMovement.all.each do |wm|
-        # binding.pry
         if wm.workout_id == workout.id && wm.user_id == current_user.id
           movement_name = Movement.find_by_id(wm.movement_id).name
           hash = {movement_name => wm}
@@ -116,35 +113,6 @@ class WorkoutsController < ApplicationController
         end
       end
       array
-      # binding.pry
     end
-
-    # def collect_workout_movement_names(wm_array, names_array)
-    #   wm_array.each do |wm|
-    #     names_array << wm.name
-    #   end
-    #   names_array
-    # end
   end
 end
-
-#trying to get the hash working otherwise I have to find the movement name in the view page!!
-# also tried just doing this in one line, but --> I can't remove the LIMIT=1 !
-# @movements << WorkoutMovement.find_each(:workout_id => params[:id])
-
-  #   def collect_movements(array, workout)
-  #     WorkoutMovement.all.each do |wm|
-  #       binding.pry
-  #       if wm.workout_id == workout.id
-  #         movement = Movement.find_by_id(wm.movement_id)
-  #         hash = {movement.name => {
-  #           weight: wm.weight,
-  #           reps: wm.reps
-  #           }}
-  #         array << hash
-  #         binding.pry
-  #       end
-  #     end
-  #     array
-  #   end
-  # end
