@@ -36,7 +36,7 @@ class WorkoutsController < ApplicationController
       @workout = Workout.find_by_id(params[:id])
       @workout_movements = []
       collect_workout_movements(@workout_movements, @workout)
-      # binding.pry
+      binding.pry
       erb :'/workouts/show'
     else
       redirect to '/login'
