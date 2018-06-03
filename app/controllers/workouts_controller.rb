@@ -23,7 +23,7 @@ class WorkoutsController < ApplicationController
     if logged_in?
       @workout = Workout.create(params[:workout])
       current_user.workouts << @workout
-      update_movements(params, @workout)
+      update_or_create_movements(params, @workout)
 
       redirect to '/workouts'
     else
@@ -36,7 +36,7 @@ class WorkoutsController < ApplicationController
       @workout = Workout.find_by_id(params[:id])
       @workout_movements = []
       collect_workout_movements(@workout_movements, @workout)
-      binding.pry
+      # binding.pry
       erb :'/workouts/show'
     else
       redirect to '/login'
@@ -47,14 +47,12 @@ class WorkoutsController < ApplicationController
     if logged_in?
       @workout = Workout.find_by_id(params[:id])
       if @workout && @workout.user == current_user
-        @user_movements = []
+        @user_movements = [] #gets list of all movements for the user
         user_movements(@user_movements)
 
-        @workout_movements = []
+        @workout_movements = [] #gathers all movement name and info from join table for this specific workout
         collect_workout_movements(@workout_movements, @workout)
 
-        @wm_names = []
-        collect_workout_movement_names(@user_movements, @wm_names)
         erb :'/workouts/edit'
       else
         redirect to '/workouts'
@@ -95,21 +93,20 @@ class WorkoutsController < ApplicationController
   end
 
   helpers do
-    #need to get this helper method working!
-    def update_movements(params, workout)
+    def update_or_create_movements(params, workout)
       #do iteration with #1-5 so the code below isn't repeated?
       #save each movement into an array and iterate of them to create a new WorkoutMovement?
         movement_1 = Movement.find_by(:name => params[:movement_1][:name]) unless params[:movement_1][:name] == "select"
         movement_2 = Movement.find_by(:name => params[:movement_2][:name]) unless params[:movement_2][:name] == "select"
         movement_3 = Movement.find_by(:name => params[:movement_3][:name]) unless params[:movement_3][:name] == "select"
 
-        WorkoutMovement.create(:workout_id => workout.id, :movement_id => movement_1.id, :weight => params[:movement_1][:weight], :reps => params[:movement_1][:reps], :user_id => current_user.id) unless movement_1 == nil
-        WorkoutMovement.create(:workout_id => workout.id, :movement_id => movement_2.id, :weight => params[:movement_2][:weight], :reps => params[:movement_2][:reps], :user_id => current_user.id) unless movement_2 == nil
-        WorkoutMovement.create(:workout_id => workout.id, :movement_id => movement_3.id, :weight => params[:movement_3][:weight], :reps => params[:movement_3][:reps], :user_id => current_user.id) unless movement_3 == nil
+        WorkoutMovement.first_or_create(:workout_id => workout.id, :movement_id => movement_1.id, :weight => params[:movement_1][:weight], :reps => params[:movement_1][:reps], :user_id => current_user.id) unless movement_1 == nil
+        WorkoutMovement.first_or_create(:workout_id => workout.id, :movement_id => movement_2.id, :weight => params[:movement_2][:weight], :reps => params[:movement_2][:reps], :user_id => current_user.id) unless movement_2 == nil
+        WorkoutMovement.first_or_create(:workout_id => workout.id, :movement_id => movement_3.id, :weight => params[:movement_3][:weight], :reps => params[:movement_3][:reps], :user_id => current_user.id) unless movement_3 == nil
         # binding.pry
     end
 
-    def collect_workout_movements(array, workout) #gets an empty array and the workout instance
+    def collect_workout_movements(array, workout) #take in an empty array and the workout instance
       WorkoutMovement.all.each do |wm|
         # binding.pry
         if wm.workout_id == workout.id && wm.user_id == current_user.id
@@ -122,12 +119,12 @@ class WorkoutsController < ApplicationController
       # binding.pry
     end
 
-    def collect_workout_movement_names(wm_array, names_array)
-      wm_array.each do |wm|
-        names_array << wm.name
-      end
-      names_array
-    end
+    # def collect_workout_movement_names(wm_array, names_array)
+    #   wm_array.each do |wm|
+    #     names_array << wm.name
+    #   end
+    #   names_array
+    # end
   end
 end
 

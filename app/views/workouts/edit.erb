@@ -37,9 +37,8 @@ Enter time: <input type="text" name="workout[time]" value="<%= @workout.time %>"
     <% end %>
   </select>
 
-<!-- how to get this last one working?? -->
-  Weight: <input type="text" name="movement_2[weight]" value="<%= @workout_movements[1].values[1][:weight] unless !@workout_movements[1]%>">
-  Reps: <input type="text" name="movement_2[reps]" value="<%= @workout_movements[1].values[1][:reps] unless !@workout_movements[1]%>">
+  Weight: <input type="text" name="movement_2[weight]" value="<%= @workout_movements[1].values[0][:weight] unless !@workout_movements[1]%>">
+  Reps: <input type="text" name="movement_2[reps]" value="<%= @workout_movements[1].values[0][:reps] unless !@workout_movements[1]%>">
 
 </br>
 
@@ -50,8 +49,8 @@ Enter time: <input type="text" name="workout[time]" value="<%= @workout.time %>"
   <% end %>
   </select>
 
-  Weight: <input type="text" name="movement_1[weight]" <%= value=@workout_movements[2].values[0][:weight] unless @workout_movements[2] == nil %>>
-  Reps: <input type="text" name="movement_3[reps]" value="<%= @workout_movements[2].values[0][:reps]%>">
+  Weight: <input type="text" name="movement_3[weight]" value="<%= @workout_movements[2].values[0][:weight] unless !@workout_movements[2]%>">
+  Reps: <input type="text" name="movement_3[reps]" value="<%= @workout_movements[2].values[0][:reps] unless !@workout_movements[2]%>">
 
 
   <p><input type="submit" value="Edit Workout"></p>
