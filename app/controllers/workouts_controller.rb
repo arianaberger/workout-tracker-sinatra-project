@@ -63,13 +63,16 @@ class WorkoutsController < ApplicationController
 
   patch '/workouts/:id' do
     if logged_in?
-      # binding.pry
-      @workout = Workout.find_by_id(params[:id])
-      movements = []
-      movements << WorkoutMovement.find_by(:workout_id => params[:id])
-      if @workout && @workout.user == current_user
-        @workout.update(params[:workout])
-        update_movements(movements)
+      workout = Workout.find_by_id(params[:id])
+
+      # workout_movements = []
+      # collect_workout_movements(workout_movements, workout)
+
+      if workout && workout.user_id == current_user.id
+        workout.update(params[:workout])
+        binding.pry
+        update_or_create_movements(params, workout)
+        binding.pry
         redirect to "/workouts/#{@workout.id}"
       else
         redirect to '/workouts'
@@ -91,12 +94,14 @@ class WorkoutsController < ApplicationController
     end
   end
 
-  
+
 
   helpers do
     def update_or_create_movements(params, workout) #this adds workout_movements to a new workout or updates the workout
       params.each_with_index do |p, i|
+        #this isn't working properly when editing! I need it to be an array? and exclude the first 2 options
         if i != 0
+          binding.pry
           movement = Movement.find_by(:name => p[1][:name]) unless p[1][:name] == "select"
           wm = WorkoutMovement.find_or_create_by(:workout_id => workout.id, :movement_id => movement.id, :user_id => current_user.id, :weight => p[1][:weight], :reps => p[1][:reps]) unless movement == nil
           wm.update(:workout_id => workout.id, :movement_id => movement.id, :user_id => current_user.id, :weight => p[1][:weight], :reps => p[1][:reps]) unless movement == nil
