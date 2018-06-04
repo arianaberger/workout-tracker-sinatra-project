@@ -96,13 +96,14 @@ class WorkoutsController < ApplicationController
 
 
   helpers do
-    def update_or_create_movements(params, workout) #this adds workout_movements to a new workout or updates the workout
+    def update_or_create_movements(params, workout)
+      wm = collect_wm_for_workout(workout)
       params.each_with_index do |p, i|
-        #this isn't working properly when editing! I need it to be an array? and exclude the first 2 options
         if i != 0 && p[0] != "workout" && p[0] != "id"
-          # binding.pry
-          movement = Movement.find_by(:name => p[1][:name]) unless p[1][:name] == "select"
-          #this is adding extra movements and not overriding the old ones!
+          binding.pry
+          # movement = Movement.find_by(:name => p[1][:name]) unless p[1][:name] == "select"
+            
+
           wm = WorkoutMovement.find_or_create_by(:workout_id => workout.id, :movement_id => movement.id, :user_id => current_user.id, :weight => p[1][:weight], :reps => p[1][:reps]) unless movement == nil
           wm.update(:workout_id => workout.id, :movement_id => movement.id, :user_id => current_user.id, :weight => p[1][:weight], :reps => p[1][:reps]) unless movement == nil
         end
@@ -118,6 +119,12 @@ class WorkoutsController < ApplicationController
         end
       end
       array
+    end
+
+    def collect_wm_for_workout(workout)
+      WorkoutMovement.map do |wm|
+        wm.workout_id == workout.id
+      end
     end
 
   end
