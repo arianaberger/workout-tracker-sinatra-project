@@ -19,9 +19,30 @@ class MovementsController < ApplicationController
   end
 
   post '/movements/new' do
-    movement = Movement.create(params[:movement])
-    current_user.movements << movement
-    redirect to '/movements'
+    if logged_in?
+      if params[:movement][:name] == ""
+        flash[:message] = "Please enter a movement name."
+        redirect to '/movements/new'
+      end
+
+      movement = Movement.create(params[:movement])
+      current_user.movements << movement
+      redirect to '/movements'
+    else
+      redirect to '/login'
+    end
+  end
+
+  delete '/movements/:id' do
+      if logged_in?
+      @movement = Movement.find_by_id(params[:id])
+        if @movement && @movement.user == current_user
+          @movement.delete
+        end
+        redirect to '/movements'
+      else
+        redirect to '/login'
+      end
   end
 
 end

@@ -1,5 +1,11 @@
 <h3>Create a new movement!</h3>
 
+<p>
+<% if flash[:message] %>
+  <font color="red"><%= flash[:message] %></font>
+<% end %>
+</p>
+
 <form action="/movements/new" method="POST">
   Movement name: <input type="text" name="movement[name]">
   <input type="submit" value="Add Movement">
