@@ -63,15 +63,9 @@ class WorkoutsController < ApplicationController
   patch '/workouts/:id' do
     if logged_in?
       workout = Workout.find_by_id(params[:id])
-
-      # workout_movements = []
-      # collect_workout_movements(workout_movements, workout)
-
       if workout && workout.user_id == current_user.id
-        workout.update(params[:workout]) #update name and time of workout WORKS
-        # binding.pry
+        workout.update(params[:workout])
         update_or_create_movements(params, workout)
-        # binding.pry
         redirect to "/workouts/#{workout.id}"
       else
         redirect to '/workouts'
@@ -97,18 +91,14 @@ class WorkoutsController < ApplicationController
 
   helpers do
     def update_or_create_movements(params, workout)
-      workout.update(params[:workout])
       wm_array = []
-      collect_wm_for_workout(wm_array, workout)
-      # binding.pry
+      collect_wm_for_workout(wm_array, workout) #gets the current movements saved for this workout
       if wm_array != nil
         params.each_with_index do |p, i|
-          # binding.pry
-          # if i != 0 && p[0] != "workout" && p[0] != "id"
-          if p[0] == "movement_#{i-1}"
+          if p[0] == "movement_#{i-1}" #checks for correct params values
+            #gets the corresponding movement instance - could be streamlined? Use other method??
             movement = Movement.all.find_by(:name => p[1][:name], :user_id => current_user.id)
             if wm_array[i] != nil && p[1][:name] != "select"
-              # binding.pry
               wm_array[i].update(:workout_id => workout.id, :movement_id => movement.id, :user_id => current_user.id, :weight => p[1][:weight], :reps => p[1][:reps])
             elsif p[0] == "select"
               wm_array[i].destroy
@@ -119,9 +109,6 @@ class WorkoutsController < ApplicationController
         WorkoutMovement.create(:workout_id => workout.id, :movement_id => movement.id, :user_id => current_user.id, :weight => p[1][:weight], :reps => p[1][:reps]) unless movement == nil
       end
     end
-
-          # wm = WorkoutMovement.find_or_create_by(:workout_id => workout.id, :movement_id => movement.id, :user_id => current_user.id, :weight => p[1][:weight], :reps => p[1][:reps]) unless movement == nil
-          # wm.update(:workout_id => workout.id, :movement_id => movement.id, :user_id => current_user.id, :weight => p[1][:weight], :reps => p[1][:reps]) unless movement == nil
 
     def collect_workout_movements(array, workout) #take in an empty array and the workout instance
       WorkoutMovement.all.each do |wm|
