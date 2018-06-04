@@ -15,6 +15,7 @@ Specs:
 - [x] Include at least one has_many relationship on your User model (x has_many y, e.g. User has_many Posts)
       --> User has many workouts
       --> Movements have many workouts
+      
 - [x] Include at least one belongs_to relationship on another model (x belongs_to y, e.g. Post belongs_to User)
       --> Workouts belong to a user
       --> Movements belong to a user
@@ -36,7 +37,7 @@ Specs:
 - [x] Display validation failures to user with error message (example form URL e.g. /posts/new)
       --> Signup and login pages show flash messages when there is an error
 
-- [ ] Your README.md includes a short description, install instructions, a contributors guide and a link to the license for your code
+- [x] Your README.md includes a short description, install instructions, a contributors guide and a link to the license for your code
 
 Confirm
 - [x] You have a large number of small Git commits
