@@ -16,14 +16,4 @@ class MovementsController < ApplicationController
     redirect to '/movements'
   end
 
-  # helpers do
-  #   def user_movements(array)
-  #     Movement.all.each do |m|
-  #       if m.user_id == current_user.id
-  #         array << m
-  #       end
-  #     end
-  #     array
-  #   end
-  # end
 end
