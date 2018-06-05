@@ -149,6 +149,7 @@ class WorkoutsController < ApplicationController
       array
     end
 
+    #should I delete this method??
     def collect_wm_for_workout(array, workout)
       WorkoutMovement.all.map do |wm|
         if wm.workout_id == workout.id
