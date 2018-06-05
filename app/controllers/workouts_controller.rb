@@ -94,15 +94,12 @@ class WorkoutsController < ApplicationController
     def update_or_create_movements(params, workout)
       wm_array = []
       collect_workout_movements(wm_array, workout)
-      if wm_array.empty?
-        #iterate through params and create new workoutmovements for the workout, save correct movement and user id
+      if wm_array.empty? #iterate through params and create new workoutmovements for the workout, save correct movement and user id
         params.each_with_index do |p, i|
-          binding.pry
-          if p[0].include?("movement")
-            binding.pry
-            movement = Movement.all.find_by(:name => p[i+1][:name], :user_id => current_user.id)
+          # binding.pry #why does it seem to loop before hitting the if statement below?
+          if p[0].include?("movement") && p[1][:name] != "select"
+            movement = Movement.all.find_by(:name => p[1][:name], :user_id => current_user.id)
             WorkoutMovement.create(:workout_id => workout.id, :movement_id => movement.id, :user_id => current_user.id, :weight => p[1][:weight], :reps => p[1][:reps])
-            binding.pry
           end
         end
       else
