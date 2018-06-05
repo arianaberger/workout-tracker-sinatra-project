@@ -15,4 +15,10 @@ describe 'User' do
     expect(User.find_by_slug(slug).username).to eq (name)
   end
 
+  it 'has a secure password' do
+    expect(@user.authenticate("wrongpassword")).to eq(false)
+
+    expect(@user.authenticate("test")).to eq(@user)
+  end
+
 end
