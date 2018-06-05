@@ -1,16 +1,18 @@
-require 'spec_helper'
-
+require 'spec_helper' #do I need this here?
 require 'pry'
+
 describe 'User' do
   before do
-    binding.pry
     @user = User.create(:username => "yanna b", :password => "test")
-    binding.pry
   end
   it 'can slug the username' do
-    binding.pry
     expect(@user.slug).to eq ("yanna-b")
   end
 
+  it 'can find user based on slug' do
+    name = @user.username
+    slug = @user.slug
+    expect(User.find_by_slug(slug).username).to eq (name)
+  end
 
 end
