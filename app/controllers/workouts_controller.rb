@@ -23,7 +23,7 @@ class WorkoutsController < ApplicationController
     if logged_in?
       @workout = Workout.create(params[:workout])
       current_user.workouts << @workout
-      update_or_create_movements(params, @workout)
+      create_or_update_workout(params, @workout)
       binding.pry
       redirect to '/workouts'
     else
@@ -66,7 +66,7 @@ class WorkoutsController < ApplicationController
       workout = Workout.find_by_id(params[:id])
       if workout && workout.user_id == current_user.id
         workout.update(params[:workout])
-        update_or_create_movements(params, workout)
+        create_or_update_workout(params, workout)
         redirect to "/workouts/#{workout.id}"
       else
         redirect to '/workouts'
@@ -89,34 +89,17 @@ class WorkoutsController < ApplicationController
   end
 
 
-
   helpers do
-    def update_or_create_movements(params, workout)
+    def create_or_update_workout(params, workout)
       wm_array = []
       collect_workout_movements(wm_array, workout)
-      if wm_array.empty? #iterate through params and create new workoutmovements for the workout, save correct movement and user id
-        params.each_with_index do |p, i|
-          # binding.pry #why does it seem to loop before hitting the if statement below?
-          if p[0].include?("movement") && p[1][:name] != "select"
-            movement = Movement.all.find_by(:name => p[1][:name], :user_id => current_user.id)
-            WorkoutMovement.create(:workout_id => workout.id, :movement_id => movement.id, :user_id => current_user.id, :weight => p[1][:weight], :reps => p[1][:reps])
-          end
-        end
+      if wm_array.empty? #checks if it is a new workout
+        create_workout_movements(params, workout)
       else
-        #delete them and start fresh with new wm for the workout
-        wm_array.each do |wm|
-          # binding.pry
+        wm_array.each do |wm| #otherwise delete currently save workout_movements
           wm.values[0].destroy
         end
-        # binding.pry
-        #now iterate through params and create new WM
-        params.each_with_index do |p, i|
-          if p[0].include?("movement") && p[1][:name] != "select"
-            # binding.pry
-            movement = Movement.all.find_by(:name => p[1][:name], :user_id => current_user.id)
-            WorkoutMovement.create(:workout_id => workout.id, :movement_id => movement.id, :user_id => current_user.id, :weight => p[1][:weight], :reps => p[1][:reps])
-          end
-        end
+        create_workout_movements(params, workout)
       end
     end
 
@@ -128,8 +111,19 @@ class WorkoutsController < ApplicationController
           array << hash
         end
       end
-      array
+      array #do I need to output the original array here?
     end
+
+    def create_workout_movements(params, workout)
+      params.each_with_index do |p, i|
+        if p[0].include?("movement") && p[1][:name] != "select"
+          movement = Movement.all.find_by(:name => p[1][:name], :user_id => current_user.id)
+          WorkoutMovement.create(:workout_id => workout.id, :movement_id => movement.id, :user_id => current_user.id, :weight => p[1][:weight], :reps => p[1][:reps])
+        end
+      end
+    end
+  end
+end
 
     #last attempt
     # def update_or_create_movements(params, workout)
@@ -178,6 +172,3 @@ class WorkoutsController < ApplicationController
     #     end
     #   end
     # end
-
-  end
-end
