@@ -105,12 +105,17 @@ class WorkoutsController < ApplicationController
       else
         #delete them and start fresh with new wm for the workout
         wm_array.each do |wm|
-          wm.destroy
+          # binding.pry
+          wm.values[0].destroy
         end
-        binding.pry
+        # binding.pry
+        #now iterate through params and create new WM
         params.each_with_index do |p, i|
-          movement = Movement.all.find_by(:name => p[i+1][:name], :user_id => current_user.id)
-          WorkoutMovement.create(:workout_id => workout.id, :movement_id => movement.id, :user_id => current_user.id, :weight => p[1][:weight], :reps => p[1][:reps])
+          if p[0].include?("movement") && p[1][:name] != "select"
+            # binding.pry
+            movement = Movement.all.find_by(:name => p[1][:name], :user_id => current_user.id)
+            WorkoutMovement.create(:workout_id => workout.id, :movement_id => movement.id, :user_id => current_user.id, :weight => p[1][:weight], :reps => p[1][:reps])
+          end
         end
       end
     end
