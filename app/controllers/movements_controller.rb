@@ -25,9 +25,14 @@ class MovementsController < ApplicationController
         redirect to '/movements/new'
       end
 
-      movement = Movement.create(params[:movement])
-      current_user.movements << movement
-      redirect to '/movements'
+      if Movement.all.find_by(:name => params[:movement][:name], :user_id => current_user.id)
+        flash[:message] = "That movement already exists."
+        redirect to '/movements/new'
+      else
+        movement = Movement.create(params[:movement])
+        current_user.movements << movement
+        redirect to '/movements'
+      end
     else
       redirect to '/login'
     end
