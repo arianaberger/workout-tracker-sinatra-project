@@ -93,24 +93,63 @@ class WorkoutsController < ApplicationController
   helpers do
     def update_or_create_movements(params, workout)
       wm_array = []
-      collect_wm_for_workout(wm_array, workout) #gets the current movements saved for this workout
-      params.each_with_index do |p, i|
-        if !wm_array.empty?
-          if p[0] == "movement_#{i-1}"
-            movement = Movement.all.find_by(:name => p[i+1][:name], :user_id => current_user.id)
+      collect_workout_movements(wm_array, workout)
+      if wm_array.empty?
+        #iterate through params and create new workoutmovements for the workout, save correct movement and user id
+        params.each_with_index do |p, i|
+          binding.pry
+          if p[0].include?("movement")
             binding.pry
-            wm_array[i].update(:workout_id => workout.id, :movement_id => movement.id, :user_id => current_user.id, :weight => p[1][:weight], :reps => p[1][:reps])
+            movement = Movement.all.find_by(:name => p[i+1][:name], :user_id => current_user.id)
+            WorkoutMovement.create(:workout_id => workout.id, :movement_id => movement.id, :user_id => current_user.id, :weight => p[1][:weight], :reps => p[1][:reps])
+            binding.pry
           end
-        elsif p[0] == "select"
-          binding.pry
-          wm_array[i].destroy
-        else
-          binding.pry
+        end
+      else
+        #delete them and start fresh with new wm for the workout
+        wm_array.each do |wm|
+          wm.destroy
+        end
+        binding.pry
+        params.each_with_index do |p, i|
           movement = Movement.all.find_by(:name => p[i+1][:name], :user_id => current_user.id)
           WorkoutMovement.create(:workout_id => workout.id, :movement_id => movement.id, :user_id => current_user.id, :weight => p[1][:weight], :reps => p[1][:reps])
         end
       end
     end
+
+    def collect_workout_movements(array, workout) #take in an empty array and the workout instance
+      WorkoutMovement.all.each do |wm|
+        if wm.workout_id == workout.id && wm.user_id == current_user.id
+          movement_name = Movement.find_by_id(wm.movement_id).name
+          hash = {movement_name => wm}
+          array << hash
+        end
+      end
+      array
+    end
+
+    #last attempt
+    # def update_or_create_movements(params, workout)
+    #   wm_array = []
+    #   collect_wm_for_workout(wm_array, workout) #gets the current movements saved for this workout
+    #   params.each_with_index do |p, i|
+    #     if !wm_array.empty?
+    #       if p[0] == "movement_#{i-1}"
+    #         movement = Movement.all.find_by(:name => p[i+1][:name], :user_id => current_user.id)
+    #         binding.pry
+    #         wm_array[i].update(:workout_id => workout.id, :movement_id => movement.id, :user_id => current_user.id, :weight => p[1][:weight], :reps => p[1][:reps])
+    #       end
+    #     elsif p[0] == "select"
+    #       binding.pry
+    #       wm_array[i].destroy
+    #     else
+    #       binding.pry
+    #       movement = Movement.all.find_by(:name => p[i+1][:name], :user_id => current_user.id)
+    #       WorkoutMovement.create(:workout_id => workout.id, :movement_id => movement.id, :user_id => current_user.id, :weight => p[1][:weight], :reps => p[1][:reps])
+    #     end
+    #   end
+    # end
 
 
 
@@ -137,26 +176,6 @@ class WorkoutsController < ApplicationController
     #     end
     #   end
     # end
-
-    def collect_workout_movements(array, workout) #take in an empty array and the workout instance
-      WorkoutMovement.all.each do |wm|
-        if wm.workout_id == workout.id && wm.user_id == current_user.id
-          movement_name = Movement.find_by_id(wm.movement_id).name
-          hash = {movement_name => wm}
-          array << hash
-        end
-      end
-      array
-    end
-
-    #should I delete this method??
-    def collect_wm_for_workout(array, workout)
-      WorkoutMovement.all.map do |wm|
-        if wm.workout_id == workout.id
-          array << wm
-        end
-      end
-    end
 
   end
 end
