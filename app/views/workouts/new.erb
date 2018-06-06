@@ -3,15 +3,17 @@
 <i>Missing a movement? Make sure to first manage your movements <a href="/movements">here</a>.</i>
 
 <p>
+Enter name: <input type="text" name="workout[name]">
+
 <form action="/workouts" method="POST">
-  <!-- add different method for date input later? -->
   Type:
-  <select name="workout[name]">
+  <select name="workout[style]">
     <option value="emom">EMOM</option>
     <option value="amrap">AMRAP</option>
     <option value="time_cap">Time Cap</option>
     <option value="for_time">For Time</option>
   </select>
+</br>
 
 Enter time: <input type="text" name="workout[time]"></br>
 Enter rounds (if applicable): <input type="text" name="workout[rounds]">

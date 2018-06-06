@@ -41,15 +41,15 @@ class WorkoutsController < ApplicationController
     end
   end
 
-  get '/workouts/:id/edit' do #NEEDS WORK
+  get '/workouts/:id/edit' do
     if logged_in?
       @workout = Workout.find_by_id(params[:id])
       if @workout && @workout.user == current_user
-        @user_movements = [] #gets list of all movements for the user
-        user_movements(@user_movements)
+        @user_movements = []
+        user_movements(@user_movements) #gets list of all movements saved for the user
 
-        @workout_movements = [] #gathers all movement name and info from join table for this specific workout
-        collect_workout_movements(@workout_movements, @workout)
+        @workout_movements = []
+        collect_workout_movements(@workout_movements, @workout) #gets all info from join table for this specific workout
 
         erb :'/workouts/edit'
       else
@@ -64,6 +64,7 @@ class WorkoutsController < ApplicationController
     if logged_in?
       workout = Workout.find_by_id(params[:id])
       if workout && workout.user_id == current_user.id
+        binding.pry
         workout.update(params[:workout])
         create_or_update_workout(params, workout)
         redirect to "/workouts/#{workout.id}"
@@ -77,9 +78,9 @@ class WorkoutsController < ApplicationController
 
   delete '/workouts/:id' do
     if logged_in?
-    @workout = Workout.find_by_id(params[:id])
-      if @workout && @workout.user == current_user
-        @workout.delete
+    workout = Workout.find_by_id(params[:id])
+      if workout && workout.user == current_user
+        workout.delete
       end
       redirect to '/workouts'
     else

@@ -1,16 +1,21 @@
 <h3>Edit workout</h3>
 
 <p>
+
 <form action="/workouts/<%= @workout.id %>" method="POST">
   <input id="hidden" type="hidden" name="_method" value="PATCH">
 
   Type:
-  <select name="workout[name]">
-    <option value="emom" <%= 'selected' if @workout.name == "emom" %>>EMOM</option>
-    <option value="amrap" <%= 'selected' if @workout.name == "amrap" %>>AMRAP</option>
-    <option value="time_cap" <%= 'selected' if @workout.name == "time_cap" %>>Time Cap</option>
-    <option value="for_time" <%= 'selected' if @workout.name == "for_time" %>>For Time</option>
+  <select name="workout[style]">
+    <option value="emom" <%= 'selected' if @workout.style == "emom" %>>EMOM</option>
+    <option value="amrap" <%= 'selected' if @workout.style == "amrap" %>>AMRAP</option>
+    <option value="time_cap" <%= 'selected' if @workout.style == "time_cap" %>>Time Cap</option>
+    <option value="for_time" <%= 'selected' if @workout.style == "for_time" %>>For Time</option>
   </select>
+</br>
+
+Enter name: <input type="text" name="workout[name]">
+</br>
 
 Enter time: <input type="text" name="workout[time]" value="<%= @workout.time %>"></br>
 Enter rounds (if applicable): <input type="text" name="workout[rounds]" value="<%= @workout.rounds %>">

@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 2018_05_24_142203) do
 
   create_table "workouts", force: :cascade do |t|
     t.string "name"
+    t.string "style"
     t.string "time"
     t.string "rounds"
     t.integer "user_id"
