@@ -1,8 +1,9 @@
 This is the workout
 
-<h3>Workout Name: <%= @workout.name.upcase %></h3>
+<h3>Workout Name: <%= @workout.name.upcase.gsub("_"," ") %></h3>
 
-Time: <%=@workout.time%>
+Time: <%=@workout.time%></br>
+Rounds: <%=@workout.rounds%>
 
 <p></p>
 

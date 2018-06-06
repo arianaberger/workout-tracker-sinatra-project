@@ -24,7 +24,6 @@ class WorkoutsController < ApplicationController
       @workout = Workout.create(params[:workout])
       current_user.workouts << @workout
       create_or_update_workout(params, @workout)
-      binding.pry
       redirect to '/workouts'
     else
       redirect to '/login'
