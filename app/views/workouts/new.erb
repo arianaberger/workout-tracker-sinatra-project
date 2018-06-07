@@ -2,6 +2,12 @@
 
 <i>Missing a movement? Make sure to first manage your movements <a href="/movements">here</a>.</i>
 
+<p>
+<% if flash[:message] %>
+  <font color="red"><%= flash[:message] %></font>
+<% end %>
+</p>
+
 <form action="/workouts" method="POST">
   Enter name: <input type="text" name="workout[name]">
 </br>

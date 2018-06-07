@@ -12,6 +12,8 @@ class WorkoutsController < ApplicationController
   get '/workouts/new' do
     if logged_in?
       @user_movements = []
+      binding.pry
+
       user_movements(@user_movements)
       erb :'/workouts/new'
     else
@@ -23,6 +25,7 @@ class WorkoutsController < ApplicationController
     if logged_in?
       if params[:workout][:name] == "" || params[:workout][:time] == ""
         @params = params
+        flash[:message] = "Please enter at least a workout name and time."
         erb :'/workouts/new'
       else
         workout = current_user.workouts.build(params[:workout])
