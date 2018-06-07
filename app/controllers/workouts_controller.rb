@@ -29,7 +29,7 @@ class WorkoutsController < ApplicationController
         if workout.save
       # @workout = Workout.create(params[:workout])       #use .build + if .save - see tweets example
       # current_user.workouts << @workout
-          create_or_update_workout(params, @workout)
+          create_or_update_workout(params, workout)
           redirect to '/workouts'
         else
           redirect to '/workouts/new'
@@ -115,14 +115,13 @@ class WorkoutsController < ApplicationController
 
     def collect_workout_movements(array, workout) #take in an empty array and the workout instance
       WorkoutMovement.all.each do |wm|
-        binding.pry
         if wm.workout_id == workout.id && wm.user_id == current_user.id
           movement_name = Movement.find_by_id(wm.movement_id).name
           hash = {movement_name => wm}
           array << hash
         end
       end
-      array #do I need to output the original array here?
+      array #do I need to output the original array here? how to get .map working?
     end
 
     def create_workout_movements(params, workout)
