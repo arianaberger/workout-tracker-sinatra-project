@@ -12,7 +12,6 @@ class WorkoutsController < ApplicationController
   get '/workouts/new' do
     if logged_in?
       @user_movements = []
-      binding.pry
 
       user_movements(@user_movements)
       erb :'/workouts/new'
@@ -77,7 +76,6 @@ class WorkoutsController < ApplicationController
     if logged_in?
       workout = Workout.find_by_id(params[:id])
       if workout && workout.user_id == current_user.id
-        binding.pry
         workout.update(params[:workout])
         create_or_update_workout(params, workout)
         redirect to "/workouts/#{workout.id}"
