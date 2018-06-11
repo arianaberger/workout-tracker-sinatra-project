@@ -36,6 +36,6 @@ class ApplicationController < Sinatra::Base
       end
       array
     end
-    
+
   end
 end
