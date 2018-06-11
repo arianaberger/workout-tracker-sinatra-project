@@ -11,7 +11,7 @@ class WorkoutsController < ApplicationController
 
   get '/workouts/new' do
     if logged_in?
-      @user_movements = []
+      @user_movements = [] #how to removed this and make one line with below?
       user_movements(@user_movements)
       erb :'/workouts/new'
     else

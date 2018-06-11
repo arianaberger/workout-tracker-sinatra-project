@@ -1,25 +1,30 @@
 <h3>Workout Name: <%= @workout.name.upcase %></h3>
 
-Type: <%= @workout.style.upcase.gsub("_"," ") %></br>
-Time: <%=@workout.time%></br>
-Rounds: <%=@workout.rounds%>
+<div class="workout-details">
+  Type: <%= @workout.style.upcase.gsub("_"," ") %></br>
+  Time: <%=@workout.time%></br>
+  Rounds: <%=@workout.rounds%>
+</div>
 
-<p></p>
 
 <!-- iterate through movements in @workout_movements array and display each -->
-Movements:</br>
+Movements:
+<div class="workout-movements">
   <%@workout_movements.each do |m|%>
-    <%=m.keys[0]%> | Reps: <%=m.values[0][:reps]%> Weight: <%=m.values[0][:weight]%> 
+    <%=m.keys[0]%> | Reps: <%=m.values[0][:reps]%> Weight: <%=m.values[0][:weight]%>
   </br>
   <%end%>
+</div>
 
-<p>
+<div class="form-button">
 <form action="/workouts/<%= @workout.id %>/edit" method="get">
   <input type="submit" value="Edit">
 </form>
-</p>
+</div>
 
+<div class="form-button">
 <form action="/workouts/<%= @workout.id %>" method="post">
   <input type="hidden" name="_method" value="DELETE">
   <input type="submit" value="Delete">
 </form>
+</div>

@@ -2,15 +2,15 @@
 
 <a href="/workouts/new">Add a workout</a> | <a href="/movements">Manage your movements</a>
 
-<p>
+<div>
+  <% if @workouts.empty? %>
+  You have no workouts yet!
+  <% else %>
 
-<% if @workouts.empty? %>
-You have no workouts yet!
-<% else %>
+  <!-- display workouts -->
 
-<!-- display workouts -->
-
-  <% @workouts.each do |w| %>
-    <h4><a href="/workouts/<%= w.id %>">| <%=w.name.upcase%> -- created: <%=w.created_at.strftime("%d %b, %Y")%></a></h4>
+    <% @workouts.each do |w| %>
+      <h4>| <a href="/workouts/<%= w.id %>"><%=w.name.upcase%> -- created: <%=w.created_at.strftime("%d %b, %Y")%></a></h4>
+    <% end %>
   <% end %>
-<% end %>
+</div>

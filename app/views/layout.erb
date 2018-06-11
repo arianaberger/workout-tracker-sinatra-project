@@ -9,14 +9,13 @@
     <nav>
       <% if logged_in? %>
 
-        <a href="/workouts">Your Workouts</a>
-         |
+        <a href="/workouts">Your Workouts</a> |
         <a href="/logout">Log Out</a>
-        <p>Welcome, <%=current_user.username %></p>
+        <div>Welcome, <%=current_user.username %></div>
 
       <% else %>
-        <a href="/signup">Sign Up</a>
-        <a href="/login"> Sign In </a>
+        <a href="/signup">Sign Up</a> |
+        <a href="/login"> Login </a>
       <%end %>
 
     </nav>
