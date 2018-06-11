@@ -29,9 +29,9 @@ class WorkoutsController < ApplicationController
         workout = current_user.workouts.build(params[:workout])
         if workout.save
           create_or_update_workout(params, workout)
-          redirect to '/workouts'
+          redirect to "/workouts/#{workout.id}"
         else
-          redirect to '/workouts/new'
+          redirect to '/workouts'
         end
       end
     else

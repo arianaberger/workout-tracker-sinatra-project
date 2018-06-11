@@ -1,5 +1,3 @@
-This is the workout
-
 <h3>Workout Name: <%= @workout.name.upcase %></h3>
 
 Type: <%= @workout.style.upcase.gsub("_"," ") %></br>
@@ -11,7 +9,7 @@ Rounds: <%=@workout.rounds%>
 <!-- iterate through movements in @workout_movements array and display each -->
 Movements:</br>
   <%@workout_movements.each do |m|%>
-    <%=m.keys[0]%> | Weight: <%=m.values[0][:weight]%> Reps: <%=m.values[0][:reps]%>
+    <%=m.keys[0]%> | Reps: <%=m.values[0][:reps]%> Weight: <%=m.values[0][:weight]%> 
   </br>
   <%end%>
 

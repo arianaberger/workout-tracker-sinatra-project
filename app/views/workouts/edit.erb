@@ -1,5 +1,7 @@
 <h3>Edit workout</h3>
 
+<i>Missing a movement? Make sure to first manage your movements <a href="/movements">here</a>.</i>
+
 <p>
 
 <form action="/workouts/<%= @workout.id %>" method="POST">
@@ -22,7 +24,6 @@ Enter rounds (if applicable): <input type="text" name="workout[rounds]" value="<
 </p>
 
   <p>Movement(s):</br>
-    <i>Missing a movement? Make sure to first manage your movements <a href="/movements">here</a>.</i>
   </p>
 
     <select name="movement_1[name]">
@@ -32,8 +33,8 @@ Enter rounds (if applicable): <input type="text" name="workout[rounds]" value="<
     <% end %>
   </select>
 
-  Weight: <input type="text" name="movement_1[weight]" value="<%= @workout_movements[0].values[0][:weight] unless !@workout_movements[0]%>">
   Reps: <input type="text" name="movement_1[reps]" value="<%= @workout_movements[0].values[0][:reps] unless !@workout_movements[0]%>">
+  Weight: <input type="text" name="movement_1[weight]" value="<%= @workout_movements[0].values[0][:weight] unless !@workout_movements[0]%>">
 
 </br>
     <select name="movement_2[name]">
