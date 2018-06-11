@@ -12,7 +12,6 @@ class WorkoutsController < ApplicationController
   get '/workouts/new' do
     if logged_in?
       @user_movements = []
-
       user_movements(@user_movements)
       erb :'/workouts/new'
     else
@@ -29,8 +28,6 @@ class WorkoutsController < ApplicationController
       else
         workout = current_user.workouts.build(params[:workout])
         if workout.save
-      # @workout = Workout.create(params[:workout])       #use .build + if .save - see tweets example
-      # current_user.workouts << @workout
           create_or_update_workout(params, workout)
           redirect to '/workouts'
         else

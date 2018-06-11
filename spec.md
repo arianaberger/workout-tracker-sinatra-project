@@ -26,16 +26,18 @@ Specs:
 - [x] Ensure that users can't modify content created by other users
       --> Code checks that user is logged in and that the workout's user id matches the id of the current user
 
-- [ ] Ensure that the belongs_to resource has routes for Creating, Reading, Updating and Destroying
+- [x] Ensure that the belongs_to resource has routes for Creating, Reading, Updating and Destroying
       --> Included for Workouts
-      --> Finish for Movements!
+      --> partially for Movements (show page is for all movements)
 
 - [x] Include user input validations
       --> Used in the signup and login pages
+      --> Validation when Workout has no name and time
       --> There is validation for creating a movement, which needs a name
 
 - [x] Display validation failures to user with error message (example form URL e.g. /posts/new)
       --> Signup and login pages show flash messages when there is an error
+      --> Movements and workouts pages also have flash message when info is missing
 
 - [x] Your README.md includes a short description, install instructions, a contributors guide and a link to the license for your code
 
