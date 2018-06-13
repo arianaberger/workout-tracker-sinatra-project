@@ -1,6 +1,6 @@
 # WERKout Tracker
 
-This is a web application that demonstrates the routing features of Sinatra by allowing the user to create and save workouts.
+This is a web application that demonstrates the routing features of Sinatra by allowing the user to create and save workouts, each with own specific movements and corresponding movement details..
 
 ## Installation
 
