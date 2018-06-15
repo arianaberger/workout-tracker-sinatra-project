@@ -11,7 +11,7 @@ class WorkoutsController < ApplicationController
 
   get '/workouts/new' do
     if logged_in?
-      @user_movements = [] #how to removed this and make one line with below?
+      @user_movements = [] #how to remove this and make one line with below?
       user_movements(@user_movements)
       erb :'/workouts/new'
     else
@@ -24,6 +24,8 @@ class WorkoutsController < ApplicationController
       if params[:workout][:name] == "" || params[:workout][:time] == ""
         @params = params
         flash[:message] = "Please enter at least a workout name and time."
+        @user_movements = [] #how to remove this and make one line with below?
+        user_movements(@user_movements)
         erb :'/workouts/new'
       else
         workout = current_user.workouts.build(params[:workout])
@@ -31,7 +33,8 @@ class WorkoutsController < ApplicationController
           create_or_update_workout(params, workout)
           redirect to "/workouts/#{workout.id}"
         else
-          redirect to '/workouts'
+          flash[:message] = "There was an error, please try again."
+          erb :'/workouts'
         end
       end
     else
