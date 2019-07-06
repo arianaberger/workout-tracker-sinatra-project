@@ -11,8 +11,7 @@ class WorkoutsController < ApplicationController
 
   get '/workouts/new' do
     if logged_in?
-      @user_movements = [] #how to remove this and make one line with below?
-      user_movements(@user_movements)
+      Movement.user_movements(current_user)
       erb :'/workouts/new'
     else
       redirect to '/login'
@@ -42,12 +41,17 @@ class WorkoutsController < ApplicationController
     end
   end
 
+
+#///////// @workout_movements isn't working properly, check in WorkoutMovement.rb for method
+#It's returning a hash with one movement
   get '/workouts/:id' do
     if logged_in?
       @workout = Workout.find_by_id(params[:id])
       if @workout && @workout.user == current_user
-        @workout_movements = []
-        collect_workout_movements(@workout_movements, @workout)
+        @workout_movements = WorkoutMovement.workout_movements(@workout, current_user)
+
+        # @workout_movements = []
+        # collect_workout_movements(@workout_movements, @workout)
         erb :'/workouts/show'
       else
         redirect to '/workouts'
@@ -61,11 +65,15 @@ class WorkoutsController < ApplicationController
     if logged_in?
       @workout = Workout.find_by_id(params[:id])
       if @workout && @workout.user == current_user
-        @user_movements = []
-        user_movements(@user_movements) #gets list of all movements saved for the user
+        # @user_movements = [] #can refactor this just like below too
+        # user_movements(@user_movements) #gets list of all movements saved for the user
 
-        @workout_movements = []
-        collect_workout_movements(@workout_movements, @workout) #gets all info from join table for this specific workout
+        @user_movements = Movement.user_movements
+
+        # @workout_movements = []
+        # collect_workout_movements(@workout_movements, @workout) #gets all info from join table for this specific workout
+
+        @workout_movements = WorkoutMovement.workout_movements(@workout, current_user)
 
         erb :'/workouts/edit'
       else
@@ -81,7 +89,7 @@ class WorkoutsController < ApplicationController
       workout = Workout.find_by_id(params[:id])
       if workout && workout.user_id == current_user.id
         workout.update(params[:workout])
-        create_or_update_workout(params, workout)
+        create_or_update_workout(params, workout) #links to helper method below
         redirect to "/workouts/#{workout.id}"
       else
         redirect to '/workouts'
@@ -118,16 +126,6 @@ class WorkoutsController < ApplicationController
       end
     end
 
-    def collect_workout_movements(array, workout) #take in an empty array and the workout instance
-      WorkoutMovement.all.each do |wm|
-        if wm.workout_id == workout.id && wm.user_id == current_user.id
-          movement_name = Movement.find_by_id(wm.movement_id).name
-          hash = {movement_name => wm}
-          array << hash
-        end
-      end
-      array #do I need to output the original array here? how to get .map working?
-    end
 
     def create_workout_movements(params, workout)
       params.each_with_index do |p, i|
@@ -137,5 +135,7 @@ class WorkoutsController < ApplicationController
         end
       end
     end
-  end
+
+    end
+
 end

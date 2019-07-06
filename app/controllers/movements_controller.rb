@@ -3,7 +3,9 @@ class MovementsController < ApplicationController
  get '/movements' do
    if logged_in?
      @user_movements = []
-     user_movements(@user_movements)
+     if Movement.user_movements(current_user).empty?
+       @user_movements = Movement.user_movements(current_user)
+     end
      erb :'/movements/movements'
    else
      redirect to '/login'
@@ -49,5 +51,7 @@ class MovementsController < ApplicationController
         redirect to '/login'
       end
   end
+
+
 
 end

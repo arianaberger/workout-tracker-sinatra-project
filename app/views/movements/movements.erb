@@ -1,6 +1,8 @@
 <h3>Your Movements</h3>
 
-
+<% if @user_movements.empty? %>
+No movements created yet
+<% else %>
 <% @user_movements.each do |m| %>
   <p>
         <form action="/movements/<%= m.id %>" method="post">
@@ -10,6 +12,7 @@
         </form>
   </p>
   <% end %>
+<% end %>
 
 
 + <a href="/movements/new">Add a movement</a></br>
